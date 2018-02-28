@@ -45,6 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enums\SettingsFileType.cs" />
+    <Compile Include="Interfaces\IFileGroup.cs" />
+    <Compile Include="Interfaces\IXmlManagable.cs" />
+    <Compile Include="Interfaces\INamePath.cs" />
+    <Compile Include="Interfaces\ISyncronizer.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
