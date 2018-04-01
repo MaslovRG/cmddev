@@ -14,27 +14,27 @@ namespace FileSync.Interfaces
     interface IGroup : IXmlManagable
     {
         /// <summary>
-        /// Имя группы
+        /// Уникальное имя группы.
         /// </summary>
         string Name { get; }
 
         /// <summary>
-        /// Дата последней синхронизации на локальной машине
+        /// Дата последней синхронизации на локальной машине. Если группы нет в локальном списке - null.
         /// </summary>
-        DateTime LocalLastSync { get; }
+        DateTime? LocalLastSync { get; }
 
         /// <summary>
-        /// Дата последней синхронизации в облаке
+        /// Дата последней синхронизации в облаке. Если группы нет в глобальном списке - null.
         /// </summary>
-        DateTime GlobalLastSync { get; }
+        DateTime? GlobalLastSync { get; }
 
         /// <summary>
-        /// Список файлов
+        /// Список файлов.
         /// </summary>
         IReadOnlyList<INamePath> Files { get; }
 
         /// <summary>
-        /// Список папок
+        /// Список папок.
         /// </summary>
         IReadOnlyList<INamePath> Folders { get; }
 
