@@ -46,7 +46,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SettingsFileType.cs" />
-    <Compile Include="Interfaces\IFileGroup.cs" />
+    <Compile Include="Enums\SyncStage.cs" />
+    <Compile Include="Exceptions\NoCloudSignInDataException.cs" />
+    <Compile Include="Exceptions\NoLocalSettingsPathException.cs" />
+    <Compile Include="Exceptions\SignInFailedException.cs" />
+    <Compile Include="Interfaces\IMain.cs" />
+    <Compile Include="Interfaces\IGroup.cs" />
+    <Compile Include="Interfaces\IProgressData.cs" />
     <Compile Include="Interfaces\IXmlManagable.cs" />
     <Compile Include="Interfaces\INamePath.cs" />
     <Compile Include="Interfaces\ISyncronizer.cs" />

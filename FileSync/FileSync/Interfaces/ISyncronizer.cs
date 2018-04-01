@@ -31,6 +31,6 @@ namespace FileSync.Interfaces
         /// <param name="group">
         /// Группа файлов для синхронизации
         /// </param>
-        void SyncronizeGroup(IFileGroup group);
+        void SyncronizeGroup(IGroup group);
     }
 }

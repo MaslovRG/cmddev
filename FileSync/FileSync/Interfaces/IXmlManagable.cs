@@ -25,7 +25,7 @@ namespace FileSync.Interfaces
         void ImportFromXml(XmlNode node, SettingsFileType settingsType);
 
         /// <summary>
-        /// Возвращает данные в виже XML узла
+        /// Возвращает данные в виде XML узла
         /// </summary>
         /// <param name="settingsType">
         /// Тип файла настроек, для которого предназначается возвращаемый узел

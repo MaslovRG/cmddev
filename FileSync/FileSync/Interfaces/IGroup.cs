@@ -11,36 +11,36 @@ namespace FileSync.Interfaces
     /// <summary>
     /// Интерфейс для именованной группы файлов или папок
     /// </summary>
-    interface IFileGroup : IXmlManagable
+    interface IGroup : IXmlManagable
     {
         /// <summary>
-        /// Имя группы на локальной машине
+        /// Имя группы
         /// </summary>
-        string LocalName { get; set; }
-
-        /// <summary>
-        /// Имя группы на облачном хранилище
-        /// </summary>
-        string GlobalName { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// Дата последней синхронизации на локальной машине
         /// </summary>
-        DateTime LocalLastSync { get; set; }
+        DateTime LocalLastSync { get; }
 
         /// <summary>
         /// Дата последней синхронизации в облаке
         /// </summary>
-        DateTime GlobalLastSync { get; set; }
+        DateTime GlobalLastSync { get; }
 
         /// <summary>
         /// Список файлов
         /// </summary>
-        List<INamePath> Files { get; set; }
+        IReadOnlyList<INamePath> Files { get; }
 
         /// <summary>
         /// Список папок
         /// </summary>
-        List<INamePath> Folders { get; set; }
+        IReadOnlyList<INamePath> Folders { get; }
+
+        /// <summary>
+        /// Флаг синхронизации - <code>true</code> если группа синхронизируется между локальным и облачным хранилищем
+        /// </summary>
+        bool Syncronize { get; set; }
     }
 }

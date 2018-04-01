@@ -14,11 +14,11 @@ namespace FileSync.Interfaces
         /// <summary>
         /// Имя объекта в архиве синхронизации
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// Путь (полное имя) к объекту в локальной файловой системе
         /// </summary>
-        string Path { get; set; }
+        string Path { get; }
     }
 }
