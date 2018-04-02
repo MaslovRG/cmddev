@@ -1,4 +1,4 @@
-﻿using FileSync.Enums;
+﻿using FileSyncSDK.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace FileSync.Interfaces
+namespace FileSyncSDK.Interfaces
 {
     /// <summary>
     /// Интерфейс для методов импорта и экспорта данных в XML узел файла настроек
     /// </summary>
-    interface IXmlManagable
+    public interface IXmlManagable
     {
         /// <summary>
         /// Заполнение данных из узла XML

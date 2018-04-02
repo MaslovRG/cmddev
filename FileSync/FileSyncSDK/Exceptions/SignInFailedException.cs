@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSync.Exceptions
+namespace FileSyncSDK.Exceptions
 {
     /// <summary>
     /// Исключение, выбрасываемое тогда, когда авторизация на облачном сервисе не увенчалась успехом.
     /// </summary>
-    class SignInFailedException : Exception
+    public class SignInFailedException : Exception
     {
         public SignInFailedException() : base()
         {

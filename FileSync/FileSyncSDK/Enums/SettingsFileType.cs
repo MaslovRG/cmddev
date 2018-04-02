@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSync.Enums
+namespace FileSyncSDK.Enums
 {
     /// <summary>
     /// Тип файла настроек
     /// </summary>
-    enum SettingsFileType
+    public enum SettingsFileType
     {
         /// <summary>
         /// Файл локальных настроек

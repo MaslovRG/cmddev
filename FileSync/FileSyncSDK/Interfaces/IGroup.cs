@@ -1,4 +1,4 @@
-﻿using FileSync.Enums;
+﻿using FileSyncSDK.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace FileSync.Interfaces
+namespace FileSyncSDK.Interfaces
 {
     /// <summary>
     /// Интерфейс для именованной группы файлов или папок
     /// </summary>
-    interface IGroup : IXmlManagable
+    public interface IGroup : IXmlManagable
     {
         /// <summary>
         /// Уникальное имя группы.

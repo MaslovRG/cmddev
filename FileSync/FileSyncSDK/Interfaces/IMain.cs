@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSync.Interfaces
+namespace FileSyncSDK.Interfaces
 {
-    interface IMain
+    public interface IMain
     {
         /// <summary>
         /// Инициализация синхронизатора.

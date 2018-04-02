@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSync.Interfaces
+namespace FileSyncSDK.Interfaces
 {
     /// <summary>
     /// Интерфейс для пары из имени объекта в архиве синхронизации и пути к нему (полного имени) в локальной файловой системе
     /// </summary>
-    interface INamePath
+    public interface INamePath
     {
         /// <summary>
         /// Имя объекта в архиве синхронизации

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FileSync.Enums
+namespace FileSyncSDK.Enums
 {
     /// <summary>
     /// Тип выполняемой операции
@@ -18,7 +18,7 @@ namespace FileSync.Enums
     /// ProcessSetup -> DownloadingArchive -> ExtractingFiles -> CopyingFiles -> CleaningUp
     /// 
     /// </remarks>
-    enum SyncStage
+    public enum SyncStage
     {
         /// <summary>
         /// Подготовка к началу синхронизациии

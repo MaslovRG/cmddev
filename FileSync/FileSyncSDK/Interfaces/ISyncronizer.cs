@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace FileSync.Interfaces
+namespace FileSyncSDK.Interfaces
 {
     /// <summary>
     /// Интерфейс для механизма синхронизации с одним облачным сервисом
@@ -13,7 +13,7 @@ namespace FileSync.Interfaces
     /// <remarks>
     /// В случае нескольких облачных сервисов подразумевается использование коллекции синхронизаторов
     /// </remarks>
-    interface ISyncronizer : IXmlManagable
+    internal interface ISyncronizer : IXmlManagable
     {
         /// <summary>
         /// Имя облачного сервиса
