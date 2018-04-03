@@ -15,7 +15,7 @@ namespace FileSyncSDK.Interfaces
         /// <exception cref="Exceptions.NoLocalSettingsPathException">Не задан путь к локальному файлу настроек.</exception>
         /// <exception cref="Exceptions.NoCloudSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
         /// <exception cref="Exceptions.SignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
-        void Setup();
+        void GetData();
 
         /// <summary>
         /// Синхронизация групп файлов, отмеченных для синхронизации. Обновление файлов настроек.

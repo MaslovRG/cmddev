@@ -23,7 +23,17 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Путь к корневой папке синхронизатора в древе папок облачного хранилища
         /// </summary>
-        string CloudServiceFolder { get; set; }
+        string[] CloudServiceFolder { get; set; }
+
+        /// <summary>
+        /// Имя пользователя на облачном сервисе
+        /// </summary>
+        string CloudServiceLogin { get; set; }
+
+        /// <summary>
+        /// Пароль пользователя на облачном сервисе
+        /// </summary>
+        string CloudServicePassword { get; set; }
 
         /// <summary>
         /// Синхронизация группы файлов с облачным хранилищем
@@ -32,5 +42,17 @@ namespace FileSyncSDK.Interfaces
         /// Группа файлов для синхронизации
         /// </param>
         void SyncronizeGroup(IGroup group);
+
+        /// <summary>
+        /// Загрузка глобального файла настроек на облако
+        /// </summary>
+        /// <param name="path">Путь к глобальному файлу настроек.</param>
+        void UploadSettings(string path);
+
+        /// <summary>
+        /// Загрузка глобального файла настроек на локальный компьютер
+        /// </summary>
+        /// <param name="path">Путь к глобальному файлу настроек</param>
+        void DownloadSettings(string path);
     }
 }
