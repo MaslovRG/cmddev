@@ -43,7 +43,7 @@ namespace FileSyncSDK.Interfaces
         /// При работе с глобальным файлом настроек - null.
         /// </summary>
         /// <exception cref="ArgumentException"></exception>
-        string[] ServiceFolderPath { get; set; }
+        string ServiceFolderPath { get; set; }
 
         /// <summary>
         /// Сохранение текущего списка групп в файл.

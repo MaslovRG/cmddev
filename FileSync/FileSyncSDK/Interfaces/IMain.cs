@@ -35,13 +35,25 @@ namespace FileSyncSDK.Interfaces
         /// Имя пользователя на облачном сервисе.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        string CloudLogin { get; set; }
+        string UserLogin { get; set; }
 
         /// <summary>
         /// Пароль пользователя на облачном сервисе.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
-        string CloudPassword { get; set; }
+        string UserPassword { get; set; }
+
+        /// <summary>
+        /// Имя облачного сервиса.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        string ServiceName { get; set; }
+
+        /// <summary>
+        /// Путь к рабочей папке в облачном сервисе.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"></exception>
+        string ServiceFolderPath { get; set; }
 
         /// <summary>
         /// Отображение прогресса операции.
@@ -77,5 +89,11 @@ namespace FileSyncSDK.Interfaces
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         void DeleteGroup(string name, bool local, bool global);
+
+        /// <summary>
+        /// Проверка корректности введенных данных облачного сервиса.
+        /// </summary>
+        /// <returns>true, если введенные данные облачного сервиса корректны.</returns>
+        bool CloudLoginSuccess();
     }
 }

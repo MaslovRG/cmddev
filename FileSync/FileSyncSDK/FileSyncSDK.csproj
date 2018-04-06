@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Auxullary\" />
+    <Compile Remove="Auxullary\**" />
+    <EmbeddedResource Remove="Auxullary\**" />
+    <None Remove="Auxullary\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MegaApiClient" Version="1.6.3" />
   </ItemGroup>
 
 </Project>

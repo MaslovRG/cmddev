@@ -13,27 +13,27 @@ namespace FileSyncSDK.Interfaces
     /// <remarks>
     /// В случае нескольких облачных сервисов подразумевается использование коллекции синхронизаторов
     /// </remarks>
-    internal interface ISyncronizer : IXmlManagable
+    internal interface ISyncronizer : IDisposable
     {
         /// <summary>
         /// Имя облачного сервиса
         /// </summary>
-        string CloudServiceName { get; set; }
+        string ServiceName { get; set; }
 
         /// <summary>
         /// Путь к корневой папке синхронизатора в древе папок облачного хранилища
         /// </summary>
-        string[] CloudServiceFolder { get; set; }
+        string ServiceFolderPath { get; set; }
 
         /// <summary>
         /// Имя пользователя на облачном сервисе
         /// </summary>
-        string CloudServiceLogin { get; set; }
+        string UserLogin { get; set; }
 
         /// <summary>
         /// Пароль пользователя на облачном сервисе
         /// </summary>
-        string CloudServicePassword { get; set; }
+        string UserPassword { get; set; }
 
         /// <summary>
         /// Синхронизация группы файлов с облачным хранилищем
