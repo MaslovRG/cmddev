@@ -12,7 +12,7 @@ namespace FileSyncTests
     public class Example2UnitTest
     {
         [TestMethod]
-        public void Example2()
+        public void Example2OneIsOne()
         {
             Assert.AreEqual(1, 1); 
         }

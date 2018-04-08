@@ -18,7 +18,7 @@ namespace FileSyncTests
         /// Тестируем сложную и важную вещь, проверяем равенство 1=1
         /// </summary>
         [TestMethod]
-        public void Example1ImportantThing()
+        public void Example1OneIsOne()
         {
             Assert.AreEqual(1, 1); 
         }
