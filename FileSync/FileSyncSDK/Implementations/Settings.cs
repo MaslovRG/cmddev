@@ -41,4 +41,3 @@ namespace FileSyncSDK.Implementations
         }
     }
 }
-2
