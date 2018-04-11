@@ -123,7 +123,7 @@ namespace FileSyncSDK
             }
         }
 
-        void Clean()
+        public void Clean()
         {
             throw new NotImplementedException();
         }
