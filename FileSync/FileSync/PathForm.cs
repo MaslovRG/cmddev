@@ -25,9 +25,16 @@ namespace FileSync
 
         private void applyBtn_Click(object sender, EventArgs e)
         {
-            FolderPath = folderPath.Text;
-            //main.Enabled = true;
-            Close();
+            if (folderPath.Text != "")
+            {
+                FolderPath = folderPath.Text;
+                //main.Enabled = true;
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Path can not be empty", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
