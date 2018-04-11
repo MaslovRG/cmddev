@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<localSettings>
+  <services>
+    <service name="ServiceName1">
+      <login>UserLoginExample</login>
+      <folder>Root\FileSyncFolder</folder>
+    </service>
+  </services>
+  <groups>
+    <group name="GroupName1" lastSync="01-01-2018 00:00:00">
+      <file name="File1">C:\example1\file1.txt</file>
+      <file name="File2">C:\example1\file2.txt</file>
+      <file name="File1_1">C:\example1\example\file1.txt</file>
+      <folder name="Folder1">C:\example1\folder1</folder>
+      <folder name="Folder2">C:\example1\folder2</folder>
+      <folder name="Folder1_1">C:\example1\example\folder1</folder>
+    </group>
+    <group name="GroupName2" lastSync="01-01-2018 00:00:00">
+      <file name="File1">C:\example2\file1.txt</file>
+      <file name="File2">C:\example2\file2.txt</file>
+    </group>
+    <group name="GroupName3" lastSync="01-01-2018 00:00:00">
+      <folder name="Folder1">C:\example3\folder1</folder>
+      <folder name="Folder2">C:\example3\folder2</folder>
+      <folder name="Folder1_1">C:\example3\example\folder1</folder>
+    </group>
+  </groups>
+</localSettings>
