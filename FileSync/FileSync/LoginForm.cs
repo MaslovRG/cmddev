@@ -7,7 +7,7 @@ namespace FileSync
     public partial class LoginForm : Form
     {
         private MainForm main;
-        private string Username { get; set; }
+        public string Username { get; set; }
         private string Password { get; set; }
 
         public LoginForm(MainForm m)
@@ -42,9 +42,10 @@ namespace FileSync
         /// </returns>
         private bool check_user()
         {
+            // just a test
             if (Username == "admin" && Password == "123")
                 return true;
-            return false;
+            return true;
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
