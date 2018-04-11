@@ -122,5 +122,10 @@ namespace FileSyncSDK
                 return false;
             }
         }
+
+        void Clean()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
