@@ -4,6 +4,7 @@ using System.Text;
 using FileSyncSDK.Interfaces;
 using FileSyncSDK.Implementations;
 using FileSyncSDK.Enums;
+using System.IO;
 
 namespace FileSyncSDK
 {
@@ -84,6 +85,7 @@ namespace FileSyncSDK
         private string password = null;
         private string serviceFolder = null;
         private string serviceName = null;
+        private string workFolder = null;
 
         public void DeleteGroup(string name, bool local, bool global)
         {
@@ -99,7 +101,35 @@ namespace FileSyncSDK
         {
             using (ISyncronizer syncronizer = new Syncronizer(serviceName, login, password, serviceFolder))
             {
-                // TODO
+                CreateLocalWorkFolder();
+                string globalSettingsPath = GetGlobalSettingsPath();
+                syncronizer.DownloadSettings(globalSettingsPath);
+                globalSettings = new Settings(SettingsFileType.Global, globalSettingsPath);
+            }
+        }
+
+        private string GetGlobalSettingsPath()
+        {
+            if (string.IsNullOrEmpty(workFolder))
+                return null;
+            
+            return Path.Combine(workFolder, "GlobalSettings.xml");
+        }
+
+        private void CreateLocalWorkFolder()
+        {
+            if (!string.IsNullOrEmpty(workFolder))
+                Clean();
+
+            try
+            {
+                workFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                Directory.CreateDirectory(workFolder);
+            }
+            catch (Exception e)
+            {
+                workFolder = null;
+                throw e;
             }
         }
 
