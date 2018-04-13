@@ -5,6 +5,7 @@ using FileSyncSDK.Interfaces;
 using FileSyncSDK.Implementations;
 using FileSyncSDK.Enums;
 using System.IO;
+using System.Linq;
 
 namespace FileSyncSDK
 {
@@ -20,6 +21,15 @@ namespace FileSyncSDK
         {
             LocalSettingsPath = localSettingsPath;
             ProgressView = progressView;
+
+        }
+
+        private void ResetCloudService()
+        {
+            if (localSettings != null && localSettings.CloudService != null)
+                cloudService = localSettings.CloudService;
+            else
+                cloudService = new CloudService();
         }
 
         public string LocalSettingsPath
@@ -35,6 +45,8 @@ namespace FileSyncSDK
                     localSettings = new Settings(SettingsFileType.Local, value);
                 else
                     localSettings.FilePath = value;
+
+                ResetCloudService();
             }
         }
 
@@ -42,15 +54,12 @@ namespace FileSyncSDK
         {
             get
             {
-                return login;
+                return cloudService.UserLogin;
             }
 
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException();
-
-                login = value;
+                cloudService.UserLogin = value;
             }
         }
 
@@ -58,38 +67,83 @@ namespace FileSyncSDK
         {
             get
             {
-                return password;
+                return cloudService.UserPassword;
             }
 
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException();
+                cloudService.UserPassword = value;
+            }
 
-                password = value;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return cloudService.ServiceName;
+            }
+
+            set
+            {
+                cloudService.ServiceName = value;
             }
         }
 
-        public string ServiceName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceFolderPath
+        {
+            get
+            {
+                return cloudService.ServiceFolderPath;
+            }
+
+            set
+            {
+                cloudService.ServiceFolderPath = value;
+            }
+        }
 
         public IReadOnlyList<IGroup> GlobalGroups => throw new NotImplementedException();
 
         public IReadOnlyList<IGroup> LocalGroups => throw new NotImplementedException();
 
-        public IProgress<IProgressData> ProgressView { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IProgress<IProgressData> ProgressView
+        {
+            get
+            {
+                return progress;
+            }
+
+            set
+            {
+                progress = value;
+            }
+        }
 
         private ISettings localSettings = null;
         private ISettings globalSettings = null;
-        private string login = null;
-        private string password = null;
-        private string serviceFolder = null;
-        private string serviceName = null;
-        private string workFolder = null;
+        private ICloudService cloudService = null;
+        private IProgress<IProgressData> progress = null;
 
         public void DeleteGroup(string name, bool local, bool global)
         {
-            throw new NotImplementedException();
+            if (local)
+            {
+                IGroup group = localSettings.Groups.SingleOrDefault(g => g.Name == name);
+                if (group != null)
+                    localSettings.Groups.Remove(group);
+            }
+
+            if (global)
+            {
+                using (ISession session = cloudService.OpenSession(progress))
+                {
+                    globalSettings = session.GlobalSettings;
+                    IGroup group = globalSettings.Groups.SingleOrDefault(g => g.Name == name);
+                    if (group != null)
+                        session.DeleteGroup(group);
+                }
+            }
         }
 
         public void NewGroup(string name, string[] files, string[] folders)
@@ -99,63 +153,38 @@ namespace FileSyncSDK
 
         public void GetData()
         {
-            using (ISyncronizer syncronizer = new Syncronizer(serviceName, login, password, serviceFolder))
+            using (ISession session = cloudService.OpenSession(progress))
             {
-                CreateLocalWorkFolder();
-                string globalSettingsPath = GetGlobalSettingsPath();
-                syncronizer.DownloadSettings(globalSettingsPath);
-                globalSettings = new Settings(SettingsFileType.Global, globalSettingsPath);
-            }
-        }
-
-        private string GetGlobalSettingsPath()
-        {
-            if (string.IsNullOrEmpty(workFolder))
-                return null;
-            
-            return Path.Combine(workFolder, "GlobalSettings.xml");
-        }
-
-        private void CreateLocalWorkFolder()
-        {
-            if (!string.IsNullOrEmpty(workFolder))
-                Clean();
-
-            try
-            {
-                workFolder = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                Directory.CreateDirectory(workFolder);
-            }
-            catch (Exception e)
-            {
-                workFolder = null;
-                throw e;
+                globalSettings = session.GlobalSettings;
             }
         }
 
         public void Syncronize()
         {
-            throw new NotImplementedException();
+            using (ISession session = cloudService.OpenSession(progress))
+            {
+                globalSettings = session.GlobalSettings;
+                foreach (IGroup localGroup in localSettings.Groups)
+                {
+                    IGroup globalGroup = globalSettings.Groups.SingleOrDefault(g => g.Name == localGroup.Name);
+                    session.SyncronizeGroups(localGroup, globalGroup);
+                }
+            }
         }
 
         public bool CloudLoginSuccess()
         {
             try
             {
-                using (ISyncronizer test = new Syncronizer(serviceName, login, password, serviceFolder))
+                using (ISession session = cloudService.OpenSession())
                 {
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
-        }
-
-        public void Clean()
-        {
-            throw new NotImplementedException();
         }
     }
 }

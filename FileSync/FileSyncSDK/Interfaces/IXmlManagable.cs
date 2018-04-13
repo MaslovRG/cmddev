@@ -22,7 +22,7 @@ namespace FileSyncSDK.Interfaces
         /// <param name="settingsType">
         /// Тип файла настроек, которому принадлежит узел <paramref name="node"/>
         /// </param>
-        void ImportFromXml(XmlNode node, SettingsFileType settingsType);
+        void ImportFromXml(XmlNode node);
 
         /// <summary>
         /// Возвращает данные в виде XML узла
@@ -31,6 +31,6 @@ namespace FileSyncSDK.Interfaces
         /// Тип файла настроек, для которого предназначается возвращаемый узел
         /// </param>
         /// <returns>XML узел соответствующего типа</returns>
-        XmlNode ExportToXml(SettingsFileType settingsType);
+        XmlNode ExportToXml();
     }
 }

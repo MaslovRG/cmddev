@@ -13,7 +13,6 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Путь к файлу настроек.
         /// </summary>
-        /// <exception cref="ArgumentNullException"></exception>
         string FilePath { get; set; }
 
         /// <summary>
@@ -27,23 +26,9 @@ namespace FileSyncSDK.Interfaces
         IList<IGroup> Groups { get; }
 
         /// <summary>
-        /// Имя пользователя для облачного сервиса. При работе с глобальным файлом настроек - null.
+        /// Облачный сервис
         /// </summary>
-        /// <exception cref="ArgumentException"></exception>
-        string UserLogin { get; set; }
-
-        /// <summary>
-        /// Имя облачного сервиса. При работе с глобальным файлом настроек - null.
-        /// </summary>
-        /// <exception cref="ArgumentException"></exception>
-        string ServiceName { get; set; }
-
-        /// <summary>
-        /// Путь (в виде массива названий узлов) к рабочей директории в облачном сервисе.
-        /// При работе с глобальным файлом настроек - null.
-        /// </summary>
-        /// <exception cref="ArgumentException"></exception>
-        string ServiceFolderPath { get; set; }
+        ICloudService CloudService { get; set; }
 
         /// <summary>
         /// Сохранение текущего списка групп в файл.

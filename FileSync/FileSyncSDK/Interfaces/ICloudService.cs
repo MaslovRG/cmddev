@@ -8,12 +8,12 @@ using System.Xml;
 namespace FileSyncSDK.Interfaces
 {
     /// <summary>
-    /// Интерфейс для механизма синхронизации с одним облачным сервисом
+    /// Интерфейс для работы с облачным сервисом
     /// </summary>
     /// <remarks>
     /// В случае нескольких облачных сервисов подразумевается использование коллекции синхронизаторов
     /// </remarks>
-    internal interface ISyncronizer : IDisposable
+    internal interface ICloudService : IXmlManagable
     {
         /// <summary>
         /// Имя облачного сервиса
@@ -36,23 +36,9 @@ namespace FileSyncSDK.Interfaces
         string UserPassword { get; set; }
 
         /// <summary>
-        /// Синхронизация группы файлов с облачным хранилищем
+        /// Открывает сессию работы с облачным сервисом
         /// </summary>
-        /// <param name="group">
-        /// Группа файлов для синхронизации
-        /// </param>
-        void SyncronizeGroup(IGroup group);
-
-        /// <summary>
-        /// Загрузка глобального файла настроек на облако
-        /// </summary>
-        /// <param name="path">Путь к глобальному файлу настроек.</param>
-        void UploadSettings(string path);
-
-        /// <summary>
-        /// Загрузка глобального файла настроек на локальный компьютер
-        /// </summary>
-        /// <param name="path">Путь к глобальному файлу настроек</param>
-        void DownloadSettings(string path);
+        /// <returns>Объект сессии взаимодействия с облачным сервисом</returns>
+        ISession OpenSession(IProgress<IProgressData> progress = null);
     }
 }

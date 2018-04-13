@@ -7,9 +7,9 @@ using System.Xml;
 
 namespace FileSyncSDK.Implementations
 {
-    internal class Syncronizer : ISyncronizer
+    internal class CloudService : ICloudService
     {
-        public Syncronizer(string name, string login, string password, string folderPath)
+        public CloudService()
         {
             throw new NotImplementedException();
         }
@@ -19,23 +19,17 @@ namespace FileSyncSDK.Implementations
         public string UserLogin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string UserPassword { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public void Dispose()
-        {
-            // Logout
-            throw new NotImplementedException();
-        }
-
-        public void DownloadSettings(string path)
+        public XmlNode ExportToXml()
         {
             throw new NotImplementedException();
         }
 
-        public void SyncronizeGroup(IGroup group)
+        public void ImportFromXml(XmlNode node)
         {
             throw new NotImplementedException();
         }
 
-        public void UploadSettings(string path)
+        public ISession OpenSession(IProgress<IProgressData> progress = null)
         {
             throw new NotImplementedException();
         }

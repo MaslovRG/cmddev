@@ -95,10 +95,5 @@ namespace FileSyncSDK.Interfaces
         /// </summary>
         /// <returns>true, если введенные данные облачного сервиса корректны.</returns>
         bool CloudLoginSuccess();
-
-        /// <summary>
-        /// Удаление временных файлов и папок.
-        /// </summary>
-        void Clean();
     }
 }
