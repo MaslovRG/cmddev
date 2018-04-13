@@ -19,14 +19,9 @@ namespace FileSyncSDK.Interfaces
         string Name { get; }
 
         /// <summary>
-        /// Дата последней синхронизации на локальной машине. Если группы нет в локальном списке - null.
+        /// Дата последней синхронизации. Если группы нет в списке - null.
         /// </summary>
-        DateTime? LocalLastSync { get; }
-
-        /// <summary>
-        /// Дата последней синхронизации в облаке. Если группы нет в глобальном списке - null.
-        /// </summary>
-        DateTime? GlobalLastSync { get; }
+        DateTime? LastSync { get; }
 
         /// <summary>
         /// Список файлов.
@@ -37,10 +32,5 @@ namespace FileSyncSDK.Interfaces
         /// Список папок.
         /// </summary>
         IReadOnlyList<INamePath> Folders { get; }
-
-        /// <summary>
-        /// Флаг синхронизации - <code>true</code> если группа синхронизируется между локальным и облачным хранилищем
-        /// </summary>
-        bool Syncronize { get; set; }
     }
 }

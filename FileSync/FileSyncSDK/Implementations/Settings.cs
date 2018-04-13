@@ -26,9 +26,7 @@ namespace FileSyncSDK.Implementations
 
         public IList<IGroup> Groups => throw new NotImplementedException();
 
-        public string UserLogin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ICloudService CloudService { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Load()
         {
