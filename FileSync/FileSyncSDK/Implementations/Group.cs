@@ -2,6 +2,7 @@
 using FileSyncSDK.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -9,13 +10,31 @@ namespace FileSyncSDK.Implementations
 {
     internal class Group : IGroup
     {
-        public string Name => throw new NotImplementedException();
+        public Group(string name, string[] files, string[] folders)
+        {
+            Name = string.IsNullOrEmpty(name) ? throw new ArgumentNullException("Name must not me null or empty.") : name;
+            LastSync = null;
+            Files = CreateNamePathList(files);
+            Folders = CreateNamePathList(folders);
+        }
 
-        public DateTime? LastSync => throw new NotImplementedException();
+        public Group(XmlNode node)
+        {
+            ImportFromXml(node);
+        }
 
-        public IReadOnlyList<INamePath> Files => throw new NotImplementedException();
+        private IReadOnlyList<INamePath> CreateNamePathList(string[] files)
+        {
+            throw new NotImplementedException();
+        }
 
-        public IReadOnlyList<INamePath> Folders => throw new NotImplementedException();
+        public string Name { get; private set; }
+
+        public DateTime? LastSync { get; private set; }
+
+        public IReadOnlyList<INamePath> Files { get; private set; }
+
+        public IReadOnlyList<INamePath> Folders { get; private set; }
 
         public XmlNode ExportToXml()
         {

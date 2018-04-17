@@ -103,9 +103,21 @@ namespace FileSyncSDK
             }
         }
 
-        public IReadOnlyList<IGroup> GlobalGroups => throw new NotImplementedException();
+        public IReadOnlyList<IGroup> GlobalGroups
+        {
+            get
+            {
+                return globalSettings?.Groups.ToList();
+            }
+        }
 
-        public IReadOnlyList<IGroup> LocalGroups => throw new NotImplementedException();
+        public IReadOnlyList<IGroup> LocalGroups
+        {
+            get
+            {
+                return localSettings?.Groups.ToList();
+            }
+        }
 
         public IProgress<IProgressData> ProgressView
         {
@@ -148,7 +160,11 @@ namespace FileSyncSDK
 
         public void NewGroup(string name, string[] files, string[] folders)
         {
-            throw new NotImplementedException();
+            IGroup group = new Group(name, files, folders);
+            if (localSettings.Groups.Contains(group))
+                throw new ArgumentException("Group with that name already exists.");
+
+            localSettings.Groups.Add(group);
         }
 
         public void GetData()
