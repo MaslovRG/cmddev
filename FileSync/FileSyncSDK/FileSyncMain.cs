@@ -21,7 +21,6 @@ namespace FileSyncSDK
         {
             LocalSettingsPath = localSettingsPath;
             ProgressView = progressView;
-
         }
 
         private void ResetCloudService()
@@ -161,7 +160,7 @@ namespace FileSyncSDK
         public void NewGroup(string name, string[] files, string[] folders)
         {
             IGroup group = new Group(name, files, folders);
-            if (localSettings.Groups.Contains(group))
+            if (localSettings.Groups.Contains(group) || globalSettings.Groups.Contains(group))
                 throw new ArgumentException("Group with that name already exists.");
 
             localSettings.Groups.Add(group);
