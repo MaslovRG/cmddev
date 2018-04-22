@@ -20,7 +20,7 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Обрабатываемая группа файлов, может быть null
         /// </summary>
-        IGroup Group { get; }
+        IGroupData Group { get; }
 
         /// <summary>
         /// Строка с дополнительной информацией, может быть null

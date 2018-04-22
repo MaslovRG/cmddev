@@ -63,12 +63,12 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Список групп файлов из глобального файла настроек.
         /// </summary>
-        IReadOnlyList<IGroup> GlobalGroups { get; }
+        IReadOnlyList<IGroupData> GlobalGroups { get; }
         
         /// <summary>
         /// Список групп файлов из локального файла настроек.
         /// </summary>
-        IReadOnlyList<IGroup> LocalGroups { get; }
+        IReadOnlyList<IGroupData> LocalGroups { get; }
 
         /// <summary>
         /// Создание новой группы.

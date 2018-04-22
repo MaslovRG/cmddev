@@ -81,5 +81,10 @@ namespace FileSyncSDK.Implementations
         {
             throw new NotImplementedException();
         }
+
+        public void UpdateLastSync(DateTime dateTime)
+        {
+            LastSync = dateTime;
+        }
     }
 }

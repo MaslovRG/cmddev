@@ -103,7 +103,7 @@ namespace FileSyncSDK
             }
         }
 
-        public IReadOnlyList<IGroup> GlobalGroups
+        public IReadOnlyList<IGroupData> GlobalGroups
         {
             get
             {
@@ -111,7 +111,7 @@ namespace FileSyncSDK
             }
         }
 
-        public IReadOnlyList<IGroup> LocalGroups
+        public IReadOnlyList<IGroupData> LocalGroups
         {
             get
             {
