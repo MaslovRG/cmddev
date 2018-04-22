@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace FileSyncSDK.Implementations
 {
@@ -19,12 +20,12 @@ namespace FileSyncSDK.Implementations
         public string UserLogin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public string UserPassword { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public XmlNode ExportToXml()
+        public XElement ExportToXml()
         {
             throw new NotImplementedException();
         }
 
-        public void ImportFromXml(XmlNode node)
+        public void ImportFromXml(XElement element)
         {
             throw new NotImplementedException();
         }

@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace FileSyncSDK.Implementations
 {
@@ -28,9 +29,9 @@ namespace FileSyncSDK.Implementations
             Folders = CreateNamePathList(folders);
         }
 
-        public Group(XmlNode node)
+        public Group(XElement element)
         {
-            ImportFromXml(node);
+            ImportFromXml(element);
         }
 
         private bool IsNullOrEmpty(string[] array)
@@ -72,12 +73,12 @@ namespace FileSyncSDK.Implementations
 
         public IReadOnlyList<INamePath> Folders { get; private set; }
 
-        public XmlNode ExportToXml()
+        public XElement ExportToXml()
         {
             throw new NotImplementedException();
         }
 
-        public void ImportFromXml(XmlNode node)
+        public void ImportFromXml(XElement element)
         {
             throw new NotImplementedException();
         }

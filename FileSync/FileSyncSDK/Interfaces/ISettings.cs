@@ -1,7 +1,5 @@
 ﻿using FileSyncSDK.Enums;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace FileSyncSDK.Interfaces
 {
