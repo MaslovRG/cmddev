@@ -4,6 +4,9 @@ using System.Text;
 
 namespace FileSyncSDK.Interfaces
 {
+    /// <summary>
+    /// Интерфейс для доступных только для чтения данных об именованной группе файлов и папок.
+    /// </summary>
     public interface IGroupData
     {
         /// <summary>

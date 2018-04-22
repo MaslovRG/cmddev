@@ -9,10 +9,14 @@ using System.Xml;
 namespace FileSyncSDK.Interfaces
 {
     /// <summary>
-    /// Интерфейс для именованной группы файлов или папок
+    /// Интерфейс для изменения именованной группы файлов и папок.
     /// </summary>
     internal interface IGroup : IGroupData, IXmlManagable
     {
+        /// <summary>
+        /// Обновляет значение LastSync группы.
+        /// </summary>
+        /// <param name="dateTime"></param>
         void UpdateLastSync(DateTime dateTime);
     }
 }
