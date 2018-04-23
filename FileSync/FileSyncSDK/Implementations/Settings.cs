@@ -3,6 +3,7 @@ using FileSyncSDK.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 
 namespace FileSyncSDK.Implementations
 {
@@ -19,18 +20,37 @@ namespace FileSyncSDK.Implementations
         {
             Type = type;
             FilePath = filePath;
+            Load(); 
         }
 
-        public string FilePath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public SettingsFileType Type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        private string filePath; 
 
-        public IList<IGroup> Groups => throw new NotImplementedException();
+        public string FilePath
+        {
+            get
+            {
+                return filePath; 
+            }
+            set
+            {
+                filePath = value;
+                Load(); 
+            }
+        }
 
-        public ICloudService CloudService { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public SettingsFileType Type { get; set; }
+
+        public IList<IGroup> Groups { get; set; }
+
+        public ICloudService CloudService { get; set; }
 
         public void Load()
         {
-            throw new NotImplementedException();
+            if (!File.Exists(FilePath))
+                throw new ArgumentNullException();
+            string file = File.ReadAllText(FilePath);
+            XElement xElement = XElement.Parse(file);
+
         }
 
         public void Save()
