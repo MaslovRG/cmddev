@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FileSyncSDK.Implementations; 
 
 namespace FileSyncTests
 {
@@ -20,7 +21,7 @@ namespace FileSyncTests
         [TestMethod]
         public void Example1OneIsOne()
         {
-            Assert.AreEqual(1, 1); 
+            Assert.AreEqual(1, 1);             
         }
     }
 }
