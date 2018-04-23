@@ -11,7 +11,13 @@ namespace FileSyncSDK.Exceptions
     /// </summary>
     public class NoLocalSettingsPathException : ArgumentNullException
     {
+        private const string message = "Путь для файла настроек не выбран";
+
         public NoLocalSettingsPathException() : base()
+        {
+        }
+
+        public NoLocalSettingsPathException(Exception inner) : base(message, inner)
         {
         }
     }

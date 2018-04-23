@@ -13,16 +13,16 @@ namespace FileSyncSDK.Interfaces
         /// В случае, если какие-то параметры не были заданы или для них требуются уточнения - выбрасываются соответствующие исключения.
         /// </summary>
         /// <exception cref="Exceptions.NoLocalSettingsPathException">Не задан путь к локальному файлу настроек.</exception>
-        /// <exception cref="Exceptions.NoCloudSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
-        /// <exception cref="Exceptions.SignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
+        /// <exception cref="Exceptions.NoServiceSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
+        /// <exception cref="Exceptions.ServiceSignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
         void GetData();
 
         /// <summary>
         /// Синхронизация групп файлов, отмеченных для синхронизации. Обновление файлов настроек.
         /// </summary>
         /// <exception cref="Exceptions.NoLocalSettingsPathException">Не задан путь к локальному файлу настроек.</exception>
-        /// <exception cref="Exceptions.NoCloudSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
-        /// <exception cref="Exceptions.SignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
+        /// <exception cref="Exceptions.NoServiceSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
+        /// <exception cref="Exceptions.ServiceSignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
         void Syncronize();
 
         /// <summary>

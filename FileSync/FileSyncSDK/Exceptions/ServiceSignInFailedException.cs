@@ -9,17 +9,15 @@ namespace FileSyncSDK.Exceptions
     /// <summary>
     /// Исключение, выбрасываемое тогда, когда авторизация на облачном сервисе не увенчалась успехом.
     /// </summary>
-    public class SignInFailedException : Exception
+    public class ServiceSignInFailedException : Exception
     {
-        public SignInFailedException() : base()
+        private const string message = "Введенные данные пользователя облачного сервиса не верны";
+
+        public ServiceSignInFailedException() : base()
         {
         }
 
-        public SignInFailedException(string message) : base(message)
-        {
-        }
-
-        public SignInFailedException(string message, Exception innerException) : base(message, innerException)
+        public ServiceSignInFailedException(Exception innerException) : base(message, innerException)
         {
         }
     }
