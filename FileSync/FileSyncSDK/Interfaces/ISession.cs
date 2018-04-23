@@ -17,9 +17,8 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Синхронизировать группы
         /// </summary>
-        /// <param name="local">Локальная группа.</param>
-        /// <param name="global">Глобальная группы.</param>
-        void SyncronizeGroups(IGroup local, IGroup global);
+        /// <param name="group">Локальная группа.</param>
+        void SyncronizeGroup(IGroup group);
 
         /// <summary>
         /// Удалить группу из облачного хранилища

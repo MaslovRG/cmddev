@@ -25,10 +25,13 @@ namespace FileSyncSDK
 
         private void ResetCloudService()
         {
-            if (localSettings != null && localSettings.CloudService != null)
+            if (localSettings.CloudService != null)
                 cloudService = localSettings.CloudService;
             else
+            {
                 cloudService = new CloudService();
+                localSettings.CloudService = cloudService;
+            }
         }
 
         public string LocalSettingsPath
@@ -181,8 +184,7 @@ namespace FileSyncSDK
                 globalSettings = session.GlobalSettings;
                 foreach (IGroup localGroup in localSettings.Groups)
                 {
-                    IGroup globalGroup = globalSettings.Groups.SingleOrDefault(g => g.Name == localGroup.Name);
-                    session.SyncronizeGroups(localGroup, globalGroup);
+                    session.SyncronizeGroup(localGroup);
                 }
             }
         }

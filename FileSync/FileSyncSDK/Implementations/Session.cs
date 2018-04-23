@@ -57,15 +57,23 @@ namespace FileSyncSDK.Implementations
         public void Dispose()
         {
             if (client.IsLoggedIn)
+            {
+                UploadSettings();
                 client.Logout();
+            }
             if (tempFolderPath != null && Directory.Exists(tempFolderPath))
             {
-                Directory.Delete(tempFolderPath);
+                Directory.Delete(tempFolderPath, true);
                 tempFolderPath = null;
             }
         }
 
-        public void SyncronizeGroups(IGroup local, IGroup global)
+        private void UploadSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SyncronizeGroup(IGroup group)
         {
             throw new NotImplementedException();
         }
