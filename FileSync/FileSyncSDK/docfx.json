@@ -6,7 +6,7 @@
           "files": [
             "**.csproj"
           ],
-          "src": "F:\\Projects\\sem8\\CommandDevelopment\\cmddev\\FileSync\\FileSyncSDK"
+          "src": ".."
         }
       ],
       "dest": "api",
