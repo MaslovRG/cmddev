@@ -51,7 +51,8 @@ namespace FileSyncSDK.Implementations
         public XElement ExportToXml()
         {
             var service = new XElement("service", new XAttribute("name", ServiceName));
-            service.Add(new XElement("login", new XText(UserLogin), new XElement("folder", new XText(ServiceFolderPath))));
+            service.Add(new XElement("login", new XText(UserLogin)));
+            service.Add(new XElement("folder", new XText(ServiceFolderPath))); 
             return service;
         }
 
