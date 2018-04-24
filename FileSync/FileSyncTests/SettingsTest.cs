@@ -11,9 +11,9 @@ namespace FileSyncTests
         [TestMethod]
         public void TestLoad1()
         {
-            /*Settings settings = new Settings(SettingsFileType.Local, "local.xml");
+            /*Settings settings = new Settings("local.xml");
             settings.FilePath = "localtest.xml";
-            settings.Save();*/ 
+            settings.Save();*/
         }
     }
 }

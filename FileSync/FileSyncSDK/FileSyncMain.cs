@@ -44,7 +44,10 @@ namespace FileSyncSDK
             set
             {
                 if (localSettings == null)
-                    localSettings = new Settings(SettingsFileType.Local, value);
+                {
+                    localSettings = new Settings(value);
+                    localSettings.Type = SettingsFileType.Local; 
+                }
                 else
                     localSettings.FilePath = value;
 
