@@ -44,10 +44,7 @@ namespace FileSyncSDK
             set
             {
                 if (localSettings == null)
-                {
-                    localSettings = new Settings(value);
-                    localSettings.Type = SettingsFileType.Local; 
-                }
+                    localSettings = new Settings(value, SettingsFileType.Local);
                 else
                     localSettings.FilePath = value;
 
@@ -184,11 +181,8 @@ namespace FileSyncSDK
         {
             using (ISession session = cloudService.OpenSession(progress))
             {
+                session.SyncronizeGroups(session.GlobalSettings.Groups);
                 globalSettings = session.GlobalSettings;
-                foreach (IGroup localGroup in localSettings.Groups)
-                {
-                    session.SyncronizeGroup(localGroup);
-                }
             }
         }
 

@@ -22,6 +22,11 @@ namespace FileSyncSDK.Implementations
             Load(); 
         }
 
+        public Settings(string filePath, SettingsFileType type) : this(filePath)
+        {
+            Type = type;
+        }
+
         private string filePath; 
 
         public string FilePath
@@ -49,7 +54,7 @@ namespace FileSyncSDK.Implementations
                 throw new ArgumentNullException();
             string file = File.ReadAllText(FilePath);
             XElement xElement = XElement.Parse(file);
-
+            
             if (xElement.Name == "localSettings")
             {
                 Type = SettingsFileType.Local;

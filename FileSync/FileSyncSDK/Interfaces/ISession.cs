@@ -12,13 +12,13 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Получение/загрузка глобальных настроек
         /// </summary>
-        ISettings GlobalSettings { get; set; }
+        ISettings GlobalSettings { get; }
 
         /// <summary>
         /// Синхронизировать группы
         /// </summary>
-        /// <param name="group">Локальная группа.</param>
-        void SyncronizeGroup(IGroup group);
+        /// <param name="localGroups">Локальные группы.</param>
+        void SyncronizeGroups(IEnumerable<IGroup> localGroups);
 
         /// <summary>
         /// Удалить группу из облачного хранилища

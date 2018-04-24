@@ -41,7 +41,7 @@ namespace FileSyncSDK.Implementations
             throw new NotImplementedException();
         }
 
-        public ISettings GlobalSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ISettings GlobalSettings { get => throw new NotImplementedException(); }
 
         private ISettings globalSettings = null;
         private MegaApiClient client = null;
@@ -73,7 +73,7 @@ namespace FileSyncSDK.Implementations
             throw new NotImplementedException();
         }
 
-        public void SyncronizeGroup(IGroup group)
+        public void SyncronizeGroups(IEnumerable<IGroup> localGroups)
         {
             throw new NotImplementedException();
         }
