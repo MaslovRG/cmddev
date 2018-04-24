@@ -56,16 +56,16 @@ namespace FileSyncSDK.Implementations
             if (filenames == null)
                 return new List<INamePath>();
 
-            var grouings = filenames.GroupBy(fn => Path.GetFileName(fn));
-            var singles = grouings.Where(g => g.Count() == 1).ToList();
-            var multiples = grouings.Where(g => g.Count() > 1).ToList();
+            var groupings = filenames.GroupBy(fn => Path.GetFileName(fn));
+            var singles = groupings.Where(g => g.Count() == 1).ToList();
+            var multiples = groupings.Where(g => g.Count() > 1).ToList();
 
             List<INamePath> result = singles.Select(g => new NamePath(g.Key, g.FirstOrDefault())).ToList<INamePath>();
             foreach (var grouping in multiples)
             {
                 var list = grouping.ToList();
                 for (int i = 0; i < list.Count; ++i)
-                    result.Add(new NamePath(grouping.Key + "$" + i, list[i]));
+                    result.Add(new NamePath(grouping.Key + "_" + i, list[i]));
             }
             result = result.OrderBy(np => np.Name).ToList();
 

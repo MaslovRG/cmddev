@@ -3,6 +3,7 @@ using FileSyncSDK.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
@@ -40,7 +41,7 @@ namespace FileSyncSDK.Implementations
                     throw new ArgumentNullException();
 
                 if (!IsFolderValueCorrect(value))
-                    throw new ArgumentException("Root folder haven't found in service folder path.");
+                    throw new ArgumentException("Invalid path.");
 
                 serviceFolderPath = value;
             }
@@ -76,9 +77,11 @@ namespace FileSyncSDK.Implementations
 
         private bool IsFolderValueCorrect(string folderPath)
         {
-            // TODO
-            var pathArray = folderPath.Split('\\');
-            return pathArray[0] == "Root";
+            string[] pathArray = folderPath.Split('\\');
+            char[] forbidden = Path.GetInvalidPathChars();
+            return pathArray[0] == "Root" &&
+                !pathArray.Any(p => string.IsNullOrEmpty(p)) &&
+                !folderPath.ToCharArray().Distinct().Any(c => forbidden.Contains(c));
         }
 
         public ISession OpenSession(IProgress<IProgressData> progress = null)

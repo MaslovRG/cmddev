@@ -38,7 +38,21 @@ namespace FileSyncSDK.Implementations
 
         private void SetupWorkFolder(string path)
         {
-            throw new NotImplementedException();
+            var pathFolders = path.Split('\\');
+            var nodes = client.GetNodes();
+            var parentNode = nodes.Single(n => n.Type == NodeType.Root);
+            for (int i = 1; i < pathFolders.Length; ++i)
+            {
+                var node = nodes.SingleOrDefault(n => n.ParentId == parentNode.Id && n.Name == pathFolders[i] && n.Type == NodeType.Directory);
+                if (node == null)
+                {
+                    node = client.CreateFolder(pathFolders[i], parentNode);
+                    nodes = client.GetNodes(node);
+                }
+                parentNode = node;
+            }
+
+            workFolderNode = parentNode;
         }
 
         public ISettings GlobalSettings { get => throw new NotImplementedException(); }
