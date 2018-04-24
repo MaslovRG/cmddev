@@ -51,11 +51,40 @@ namespace FileSyncSDK.Implementations
             string file = File.ReadAllText(FilePath);
             XElement xElement = XElement.Parse(file);
 
+            IEnumerable<XElement> groups = xElement.Element("groups").Elements("group");
+            Groups = new List<IGroup>(); 
+
+            foreach (XElement group in groups)
+            {
+                Groups.Add(new Group(group)); 
+            }
+
+            if (Type == SettingsFileType.Local)
+            {
+                CloudService = new CloudService(xElement.Element("services").Element("service")); 
+            }
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            XElement settings = new XElement("globalSettings"); 
+            XElement groups = new XElement("groups"); 
+            foreach (IGroup group in Groups)
+            {
+                groups.Add(group.ExportToXml()); 
+            }
+            settings.Add(groups); 
+
+            if (Type == SettingsFileType.Local)
+            {
+                settings.Name = "localSettings"; 
+                XElement services = new XElement("services");
+                services.Add(CloudService.ExportToXml());
+                settings.AddFirst(services); 
+            }
+
+            XDocument document = new XDocument(settings);            
+            document.Save(FilePath); 
         }
     }
 }
