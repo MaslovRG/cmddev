@@ -12,6 +12,8 @@ namespace FileSyncSDK.Implementations
     // TODO - progress reports
     internal class Session : ISession
     {
+        private const string settingsFileName = "settings.txt";
+
         public Session(string login, string password, string path, IProgress<IProgressData> progess = null)
         {
             try
@@ -20,6 +22,8 @@ namespace FileSyncSDK.Implementations
                 client = new MegaApiClient();
                 client.Login(login, password);
                 SetupWorkFolder(path);
+                SetupTempFolder();
+                SetupSettings();
             }
             catch (ArgumentNullException e)
             {
@@ -34,6 +38,31 @@ namespace FileSyncSDK.Implementations
                 if (client.IsLoggedIn)
                     client.Logout();
             }
+        }
+
+        private void SetupTempFolder()
+        {
+            string tempRoot = Path.GetTempPath();
+            tempFolderPath = Path.Combine(tempRoot, Path.GetRandomFileName());
+            while (Directory.Exists(tempFolderPath))
+                tempFolderPath = Path.Combine(tempRoot, Path.GetRandomFileName());
+            Directory.CreateDirectory(tempFolderPath);
+        }
+
+        private void SetupSettings()
+        {
+            string settingsPath = Path.Combine(tempFolderPath, settingsFileName);
+            INode node = GetFileNode(settingsFileName);
+            if (node != null)
+                client.DownloadFile(node, settingsPath);
+            GlobalSettings = new Settings(settingsPath, Enums.SettingsFileType.Global);
+        }
+
+        private INode GetFileNode(string name, IEnumerable<INode> nodes = null)
+        {
+            if (nodes == null)
+                nodes = client.GetNodes(workFolderNode);
+            return nodes.SingleOrDefault(n => n.Name == name && n.Type == NodeType.File && n.ParentId == workFolderNode.Id);
         }
 
         private void SetupWorkFolder(string path)
@@ -55,9 +84,8 @@ namespace FileSyncSDK.Implementations
             workFolderNode = parentNode;
         }
 
-        public ISettings GlobalSettings { get => throw new NotImplementedException(); }
+        public ISettings GlobalSettings { get; private set; }
 
-        private ISettings globalSettings = null;
         private MegaApiClient client = null;
         private INode workFolderNode = null;
         private IProgress<IProgressData> progess = null;
@@ -65,7 +93,31 @@ namespace FileSyncSDK.Implementations
 
         public void DeleteGroup(IGroup group)
         {
-            throw new NotImplementedException();
+            if (group == null)
+                throw new ArgumentNullException();
+            if (!GlobalSettings.Groups.Contains(group))
+                throw new ArgumentOutOfRangeException();
+
+            GlobalSettings.Groups.Remove(group);
+            GlobalSettings.Save();
+
+            var nodes = client.GetNodes(workFolderNode);
+            DeleteCloudFile(group.Name, nodes);
+            UpdateCloudFile(GlobalSettings.FilePath, nodes);
+        }
+
+        void DeleteCloudFile(string name, IEnumerable<INode> nodes = null)
+        {
+            INode node = GetFileNode(name, nodes);
+            if (node != null)
+                client.Delete(node);
+        }
+
+        void UpdateCloudFile(string path, IEnumerable<INode> nodes = null)
+        {
+            var name = Path.GetFileName(path);
+            DeleteCloudFile(name, nodes);
+            client.UploadFile(path, workFolderNode);
         }
 
         public void Dispose()
