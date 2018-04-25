@@ -18,10 +18,20 @@ namespace FileSyncSDK.Implementations
                 throw new ArgumentNullException("Group name must not be null or empty string.");
             if (IsNullOrEmpty(files) && IsNullOrEmpty(folders))
                 throw new ArgumentNullException("Files and folders arrays cannot be both null or empty.");
-            if (files != null && !IsAllDistinct(files))
-                throw new ArgumentException("Array must have all distinct values.", "files");
-            if (folders != null && !IsAllDistinct(folders))
-                throw new ArgumentException("Array must have all distinct values.", "folders");
+            if (files != null)
+            {
+                if (!IsAllDistinct(files))
+                    throw new ArgumentException("Array must have all distinct values.", "files");
+                if (!IsAllDistinct(files.Select(s => Path.GetFileName(s))))
+                    throw new ArgumentException("All files must have different names no matter of their path.");
+            }
+            if (folders != null)
+            {
+                if (!IsAllDistinct(folders))
+                    throw new ArgumentException("Array must have all distinct values.", "folders");
+                if (!IsAllDistinct(folders.Select(s => Path.GetFileName(s))))
+                    throw new ArgumentException("All folders must have different names no matter of their path.");
+            }
             if (HaveIntersection(files, folders))
                 throw new ArgumentException("Arrays must not have intersection.");
 
@@ -56,20 +66,7 @@ namespace FileSyncSDK.Implementations
             if (filenames == null)
                 return new List<INamePath>();
 
-            var groupings = filenames.GroupBy(fn => Path.GetFileName(fn));
-            var singles = groupings.Where(g => g.Count() == 1).ToList();
-            var multiples = groupings.Where(g => g.Count() > 1).ToList();
-
-            List<INamePath> result = singles.Select(g => new NamePath(g.Key, g.FirstOrDefault())).ToList<INamePath>();
-            foreach (var grouping in multiples)
-            {
-                var list = grouping.ToList();
-                for (int i = 0; i < list.Count; ++i)
-                    result.Add(new NamePath(grouping.Key + "_" + i, list[i]));
-            }
-            result = result.OrderBy(np => np.Name).ToList();
-
-            return result;
+            return filenames.Select(s => new NamePath(Path.GetFileName(s), s)).ToList<INamePath>();
         }
 
         public string Name { get; private set; }
