@@ -175,6 +175,7 @@ namespace FileSyncSDK
             {
                 globalSettings = session.GlobalSettings;
             }
+            localSettings.Save();
         }
 
         public void Syncronize()
@@ -184,6 +185,7 @@ namespace FileSyncSDK
                 session.SyncronizeGroups(session.GlobalSettings.Groups);
                 globalSettings = session.GlobalSettings;
             }
+            localSettings.Save();
         }
 
         public bool CloudLoginSuccess()
@@ -192,6 +194,7 @@ namespace FileSyncSDK
             {
                 using (ISession session = cloudService.OpenSession())
                 {
+                    localSettings.Save();
                     return true;
                 }
             }

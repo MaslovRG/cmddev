@@ -46,6 +46,14 @@ namespace FileSyncSDK.Implementations
             ImportFromXml(element);
         }
 
+        public Group(IGroupData group)
+        {
+            Name = group.Name;
+            LastSync = group.LastSync;
+            Files = group.Files.ToList();
+            Folders = group.Folders.ToList();
+        }
+
         private bool IsNullOrEmpty(IEnumerable<string> data)
         {
             return data == null || !data.Any();
