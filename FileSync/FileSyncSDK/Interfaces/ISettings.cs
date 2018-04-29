@@ -1,4 +1,5 @@
 ﻿using FileSyncSDK.Enums;
+using FileSyncSDK.Exceptions;
 using System.Collections.Generic;
 
 namespace FileSyncSDK.Interfaces
@@ -36,6 +37,7 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Загрузка текущего списка групп из файла.
         /// </summary>
+        /// <exception cref="SettingsDataCorruptedException">Данные в файле не соответствуют ожидаемому формату.</exception>
         void Load();
     }
 }

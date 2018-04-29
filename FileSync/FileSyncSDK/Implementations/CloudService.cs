@@ -88,5 +88,13 @@ namespace FileSyncSDK.Implementations
         {
             return new Session(UserLogin, UserPassword, ServiceFolderPath, progress);
         }
+
+        public void Clear()
+        {
+            ServiceName = defaultServiceName;
+            ServiceFolderPath = defaultServiceFolderPath;
+            UserLogin = null;
+            UserPassword = null;
+        }
     }
 }

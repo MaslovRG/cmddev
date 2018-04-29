@@ -1,8 +1,10 @@
 ﻿using FileSyncSDK.Enums;
+using FileSyncSDK.Exceptions;
 using FileSyncSDK.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace FileSyncSDK.Implementations
@@ -12,19 +14,12 @@ namespace FileSyncSDK.Implementations
         /// <summary>
         /// Основной конструктор класса настроек
         /// </summary>
-        /// <param name="filePath"></param>
         /// <exception cref="ArgumentNullException"><paramref name="filePath"/> равен null.</exception>
-        /// <exception cref="FileNotFoundException">Глобальный файл настроек не найден по указанному пути.</exception>
-        public Settings(string filePath)
+        public Settings(string filePath, SettingsFileType type)
         {
-            FilePath = filePath;
-            CloudService = null; 
-            Load(); 
-        }
-
-        public Settings(string filePath, SettingsFileType type) : this(filePath)
-        {
+            InitData();
             Type = type;
+            FilePath = filePath;
         }
 
         private string filePath; 
@@ -37,63 +32,153 @@ namespace FileSyncSDK.Implementations
             }
             set
             {
-                filePath = value;
+                filePath = value ?? throw new ArgumentNullException();
                 Load(); 
             }
         }
 
         public SettingsFileType Type { get; set; }
 
-        public IList<IGroup> Groups { get; set; }
+        public IList<IGroup> Groups { get; private set; }
 
         public ICloudService CloudService { get; set; }
 
         public void Load()
         {
-            if (!File.Exists(FilePath))
-                throw new ArgumentNullException();
-            string file = File.ReadAllText(FilePath);
-            XElement xElement = XElement.Parse(file);
-            
-            if (xElement.Name == "localSettings")
+            if (File.Exists(filePath))
             {
-                Type = SettingsFileType.Local;
-                if (xElement.Element("services") != null)
-                    if (xElement.Element("services").Element("service") != null)
-                        CloudService = new CloudService(xElement.Element("services").Element("service"));
+                switch (Type)
+                {
+                    case SettingsFileType.Global:
+                        LoadGlobalSettings();
+                        return;
+                    case SettingsFileType.Local:
+                        LoadLocalSettings();
+                        return;
+                    default:
+                        throw new NotImplementedException();
+                }
             }
             else
-                Type = SettingsFileType.Global; 
+                SetNullData();
+        }
 
-            IEnumerable<XElement> groups = xElement.Element("groups").Elements("group");
-            Groups = new List<IGroup>(); 
+        private void SetNullData()
+        {
+            Groups.Clear();
+            CloudService.Clear();
+        }
 
-            foreach (XElement group in groups)
+        private void LoadLocalSettings()
+        {
+            try
             {
-                Groups.Add(new Group(group)); 
-            }            
+                XElement root = LoadXmlRoot("localSettings");
+                LoadGroups(root);
+                LoadCloudService(root);
+            }
+            catch (Exception e)
+            {
+                throw new SettingsDataCorruptedException(e);
+            }
+        }
+
+        private void LoadCloudService(XElement root)
+        {
+            try
+            {
+                var services = root.Elements().SingleOrDefault(n => n.Name == "services");
+                if (services == null)
+                    CloudService.Clear();
+                else
+                    CloudService.ImportFromXml(services.Elements().FirstOrDefault(el => el.Name == "service"));
+            }
+            catch (Exception e)
+            {
+                throw new SettingsDataCorruptedException(e);
+            }
+        }
+
+        private void LoadGroups(XElement root)
+        {
+            Groups.Clear();
+            var groups = root.Elements().SingleOrDefault(n => n.Name == "groups");
+            if (groups != null)
+            {
+                var groupList = groups.Elements().Where(el => el.Name == "group").ToList();
+                foreach (var group in groupList)
+                    Groups.Add(new Group(group));
+            }
+        }
+
+        private XElement LoadXmlRoot(string rootName)
+        {
+            XDocument document = XDocument.Load(filePath);
+            XElement root = document.Root;
+            if (root.Name == rootName)
+                return root;
+            else
+                throw new ArgumentException("Incorrect root element name.");
+        }
+
+        private void LoadGlobalSettings()
+        {
+            XElement root = LoadXmlRoot("globalSettings");
+            LoadGroups(root);
+            LoadCloudService(root);
+        }
+
+        private void InitData()
+        {
+            Groups = new List<IGroup>();
+            CloudService = new CloudService();
         }
 
         public void Save()
         {
-            XElement settings = new XElement("globalSettings"); 
-            XElement groups = new XElement("groups"); 
+            switch (Type)
+            {
+                case SettingsFileType.Global:
+                    SaveGlobalSettings();
+                    return;
+                case SettingsFileType.Local:
+                    SaveLocalSettings();
+                    return;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
+        private void SaveLocalSettings()
+        {
+            var root = new XElement("localSettings");
+            if (CloudService != null)
+                root.Add(new XElement("services", CloudService.ExportToXml()));
+            if (Groups.Count > 0)
+                root.Add(ExportGroupsToXml());
+            SaveDocument(root);
+        }
+
+        private void SaveDocument(XElement root)
+        {
+            var document = new XDocument(root);
+            document.Save(filePath);
+        }
+
+        private XElement ExportGroupsToXml()
+        {
+            var groups = new XElement("groups");
             foreach (IGroup group in Groups)
-            {
-                groups.Add(group.ExportToXml()); 
-            }
-            settings.Add(groups); 
+                groups.Add(group.ExportToXml());
+            return groups;
+        }
 
-            if (Type == SettingsFileType.Local)
-            {
-                settings.Name = "localSettings"; 
-                XElement services = new XElement("services");
-                services.Add(CloudService.ExportToXml());
-                settings.AddFirst(services); 
-            }
-
-            XDocument document = new XDocument(settings);            
-            document.Save(FilePath); 
+        private void SaveGlobalSettings()
+        {
+            var root = new XElement("globalSettings");
+            if (Groups.Count > 0)
+                root.Add(ExportGroupsToXml());
+            SaveDocument(root);
         }
     }
 }

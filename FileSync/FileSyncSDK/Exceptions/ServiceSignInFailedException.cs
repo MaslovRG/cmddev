@@ -13,7 +13,7 @@ namespace FileSyncSDK.Exceptions
     {
         private const string message = "Введенные данные пользователя облачного сервиса не верны";
 
-        public ServiceSignInFailedException() : base()
+        public ServiceSignInFailedException() : base(message)
         {
         }
 

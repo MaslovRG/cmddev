@@ -4,6 +4,7 @@ using System.Text;
 using FileSyncSDK.Interfaces;
 using FileSyncSDK.Implementations;
 using FileSyncSDK.Enums;
+using FileSyncSDK.Exceptions;
 using System.IO;
 using System.Linq;
 
@@ -17,21 +18,11 @@ namespace FileSyncSDK
         /// <param name="localSettingsPath">Значение параметра LocalSettingsPath.</param>
         /// <param name="progressView">Значение параметра ProgessView, может быть null.</param>
         /// <exception cref="ArgumentNullException">localSettingsPath null.</exception>
+        /// <exception cref="SettingsDataCorruptedException">Данные в локальном файле настроек не соответствуют ожидаемому формату.</exception>
         public FileSyncMain(string localSettingsPath, IProgress<IProgressData> progressView)
         {
             LocalSettingsPath = localSettingsPath;
             ProgressView = progressView;
-        }
-
-        private void ResetCloudService()
-        {
-            if (localSettings.CloudService != null)
-                cloudService = localSettings.CloudService;
-            else
-            {
-                cloudService = new CloudService();
-                localSettings.CloudService = cloudService;
-            }
         }
 
         public string LocalSettingsPath
@@ -48,7 +39,7 @@ namespace FileSyncSDK
                 else
                     localSettings.FilePath = value;
 
-                ResetCloudService();
+                cloudService = localSettings.CloudService;
             }
         }
 

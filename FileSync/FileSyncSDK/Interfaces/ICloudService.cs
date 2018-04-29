@@ -40,5 +40,10 @@ namespace FileSyncSDK.Interfaces
         /// </summary>
         /// <returns>Объект сессии взаимодействия с облачным сервисом</returns>
         ISession OpenSession(IProgress<IProgressData> progress = null);
+
+        /// <summary>
+        /// Устанавливает все значения на значения по-умолчанию
+        /// </summary>
+        void Clear();
     }
 }

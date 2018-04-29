@@ -29,6 +29,7 @@ namespace FileSyncSDK.Interfaces
         /// Путь к локальному файлу настроек.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exceptions.SettingsDataCorruptedException">Данные в файле настроек повреждены.</exception>
         string LocalSettingsPath { get; set; }
 
         /// <summary>
