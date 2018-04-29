@@ -21,6 +21,16 @@ namespace FileSyncSDK.Enums
     public enum SyncStage
     {
         /// <summary>
+        /// Ничего не происходит
+        /// </summary>
+        Null,
+
+        /// <summary>
+        /// Группа задач выполнена
+        /// </summary>
+        Done,
+
+        /// <summary>
         /// Подготовка к началу синхронизациии
         /// </summary>
         ProcessSetup,
@@ -41,9 +51,9 @@ namespace FileSyncSDK.Enums
         CreatingArchive,
 
         /// <summary>
-        /// Отправка архива на облачное хранилище
+        /// Обновление данных облачного хранилиза
         /// </summary>
-        UploadingArchive,
+        UpdatingCloudData,
 
         /// <summary>
         /// Загрузка архива из облачного хранилища
