@@ -25,5 +25,10 @@ namespace FileSyncSDK.Interfaces
         /// </summary>
         /// <param name="group">Удаляемая группа</param>
         void DeleteGroup(IGroup group);
+
+        /// <summary>
+        /// Обновить метаданные с облачного хранилища
+        /// </summary>
+        void ReloadMetadata();
     }
 }
