@@ -2,57 +2,61 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using FileSyncSDK;
+using FileSyncSDK.Interfaces;
 
 namespace FileSync
 {
     public partial class MainForm : Form
     {
         private LoginForm loginForm;
-        
-        private string WorkingPath { get; set; }
+        private IMain model { get; set; }
+
+        private string LocalWorkingPath { get; set; }
+        private string GlobalWorkingPath { get; set; }
 
         public MainForm()
         {
             InitializeComponent();
-            loginForm = new LoginForm(this);
+            model = new FileSyncMain(Directory.GetCurrentDirectory(), null);
+            loginForm = new LoginForm(this, model);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            loginForm.ShowDialog();
-            logStt.Text = "Welcome, " + loginForm.Username;
+            try
+            {
+                loginForm.ShowDialog();
+                model = loginForm.model;
 
-            var pathForm = new PathForm(this);
-            pathForm.ShowDialog();
-            WorkingPath = pathForm.FolderPath;
-            
-            ShowDirectory(treePath, WorkingPath);
+                logStt.Text = "Welcome, " + model.UserLogin;
+
+                //LocalWorkingPath = model.LocalSettingsPath;
+                //GlobalWorkingPath = model.ServiceFolderPath;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
-        private void ShowDirectory(TreeView treeView, string path)
+        private void setPathToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView.Nodes.Clear();
+            var pathForm = new PathForm(this);
+            pathForm.ShowDialog();
+            //WorkingPath = pathForm.FolderPath;
 
-            var stack = new Stack<TreeNode>();
-            var rootDirectory = new DirectoryInfo(path);
-            var node = new TreeNode(rootDirectory.Name) { Tag = rootDirectory };
-            stack.Push(node);
+            TreePath.ShowDirectory(localTree, model.LocalSettingsPath);
+        }
 
-            while (stack.Count > 0)
-            {
-                var currentNode = stack.Pop();
-                var directoryInfo = (DirectoryInfo)currentNode.Tag;
-                foreach (var directory in directoryInfo.GetDirectories())
-                {
-                    var childDirectoryNode = new TreeNode(directory.Name) { Tag = directory };
-                    currentNode.Nodes.Add(childDirectoryNode);
-                    stack.Push(childDirectoryNode);
-                }
-                foreach (var file in directoryInfo.GetFiles())
-                    currentNode.Nodes.Add(new TreeNode(file.Name));
-            }
+        private void updateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            model.Syncronize();
+        }
 
-            treeView.Nodes.Add(node);
+        private void switchAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainForm_Load(sender, e);
         }
     }
 }

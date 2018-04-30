@@ -21,23 +21,23 @@ namespace FileSyncSDK.Implementations
             FilePath = filePath;
         }
 
-        public string FilePath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public SettingsFileType Type { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string FilePath { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public SettingsFileType Type { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public IList<IGroup> Groups => throw new NotImplementedException();
+        public IList<IGroup> Groups { get; set; }//=> throw new NotImplementedException();
 
-        public string UserLogin { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string UserLogin { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceName { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceFolderPath { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public void Load()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public void Save()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

@@ -32,22 +32,24 @@
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.logStt = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.localTree = new System.Windows.Forms.TreeView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.treePath = new System.Windows.Forms.TreeView();
+            this.globalTree = new System.Windows.Forms.TreeView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.settingSyncToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openPath = new System.Windows.Forms.OpenFileDialog();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,34 +82,46 @@
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.treePath);
+            this.panel1.Controls.Add(this.localTree);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel1.Location = new System.Drawing.Point(0, 24);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(183, 357);
+            this.panel1.Size = new System.Drawing.Size(352, 357);
             this.panel1.TabIndex = 1;
+            // 
+            // localTree
+            // 
+            this.localTree.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.localTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.localTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.localTree.LineColor = System.Drawing.Color.White;
+            this.localTree.Location = new System.Drawing.Point(0, 0);
+            this.localTree.Name = "localTree";
+            this.localTree.Size = new System.Drawing.Size(350, 355);
+            this.localTree.TabIndex = 0;
             // 
             // panel2
             // 
             this.panel2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel2.BackgroundImage")));
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.globalTree);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(183, 24);
+            this.panel2.Location = new System.Drawing.Point(352, 24);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(518, 357);
+            this.panel2.Size = new System.Drawing.Size(349, 357);
             this.panel2.TabIndex = 2;
             // 
-            // treePath
+            // globalTree
             // 
-            this.treePath.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.treePath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treePath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treePath.LineColor = System.Drawing.Color.White;
-            this.treePath.Location = new System.Drawing.Point(0, 0);
-            this.treePath.Name = "treePath";
-            this.treePath.Size = new System.Drawing.Size(181, 355);
-            this.treePath.TabIndex = 0;
+            this.globalTree.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.globalTree.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.globalTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.globalTree.LineColor = System.Drawing.Color.White;
+            this.globalTree.Location = new System.Drawing.Point(0, 0);
+            this.globalTree.Name = "globalTree";
+            this.globalTree.Size = new System.Drawing.Size(347, 355);
+            this.globalTree.TabIndex = 1;
             // 
             // menuStrip1
             // 
@@ -131,6 +145,19 @@
             this.settingsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.settingsToolStripMenuItem.Text = "Sync";
             // 
+            // updateToolStripMenuItem
+            // 
+            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.updateToolStripMenuItem.Text = "Sync now";
+            this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
+            // 
+            // updateToolStripMenuItem1
+            // 
+            this.updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
+            this.updateToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.updateToolStripMenuItem1.Text = "Update";
+            // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -140,29 +167,18 @@
             this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
             this.settingsToolStripMenuItem1.Text = "Settings";
             // 
-            // aboutToolStripMenuItem
-            // 
-            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
-            // updateToolStripMenuItem
-            // 
-            this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.updateToolStripMenuItem.Text = "Sync now";
-            // 
-            // updateToolStripMenuItem1
-            // 
-            this.updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
-            this.updateToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.updateToolStripMenuItem1.Text = "Update";
-            // 
             // settingSyncToolStripMenuItem
             // 
             this.settingSyncToolStripMenuItem.Name = "settingSyncToolStripMenuItem";
-            this.settingSyncToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.settingSyncToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.settingSyncToolStripMenuItem.Text = "Display";
+            // 
+            // setPathToolStripMenuItem
+            // 
+            this.setPathToolStripMenuItem.Name = "setPathToolStripMenuItem";
+            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.setPathToolStripMenuItem.Text = "Set path...";
+            this.setPathToolStripMenuItem.Click += new System.EventHandler(this.setPathToolStripMenuItem_Click);
             // 
             // accountToolStripMenuItem
             // 
@@ -178,6 +194,7 @@
             this.switchAccountToolStripMenuItem.Name = "switchAccountToolStripMenuItem";
             this.switchAccountToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.switchAccountToolStripMenuItem.Text = "Switch account";
+            this.switchAccountToolStripMenuItem.Click += new System.EventHandler(this.switchAccountToolStripMenuItem_Click);
             // 
             // signOutToolStripMenuItem
             // 
@@ -185,11 +202,11 @@
             this.signOutToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
             this.signOutToolStripMenuItem.Text = "Sign out";
             // 
-            // setPathToolStripMenuItem
+            // aboutToolStripMenuItem
             // 
-            this.setPathToolStripMenuItem.Name = "setPathToolStripMenuItem";
-            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.setPathToolStripMenuItem.Text = "Set path...";
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutToolStripMenuItem.Text = "About";
             // 
             // openPath
             // 
@@ -213,6 +230,7 @@
             this.bottomPanel.ResumeLayout(false);
             this.bottomPanel.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -226,7 +244,6 @@
         private System.Windows.Forms.Label logStt;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.TreeView treePath;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
@@ -239,6 +256,8 @@
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openPath;
+        private System.Windows.Forms.TreeView localTree;
+        private System.Windows.Forms.TreeView globalTree;
     }
 }
 

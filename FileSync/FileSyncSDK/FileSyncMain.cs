@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using FileSyncSDK.Interfaces;
 using FileSyncSDK.Implementations;
 using FileSyncSDK.Enums;
@@ -69,14 +68,14 @@ namespace FileSyncSDK
             }
         }
 
-        public string ServiceName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceFolderPath { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceName { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceFolderPath { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public IReadOnlyList<IGroup> GlobalGroups => throw new NotImplementedException();
+        public IReadOnlyList<IGroup> GlobalGroups { get; }//=> throw new NotImplementedException();
 
-        public IReadOnlyList<IGroup> LocalGroups => throw new NotImplementedException();
+        public IReadOnlyList<IGroup> LocalGroups { get; }//=> throw new NotImplementedException();
 
-        public IProgress<IProgressData> ProgressView { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IProgress<IProgressData> ProgressView { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         private ISettings localSettings = null;
         private ISettings globalSettings = null;

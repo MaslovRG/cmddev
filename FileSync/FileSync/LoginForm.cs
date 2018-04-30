@@ -1,53 +1,47 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Forms;
+using FileSyncSDK.Exceptions;
+using FileSyncSDK.Interfaces;
+using FileSyncSDK.Enums;
 
 namespace FileSync
 {
     public partial class LoginForm : Form
     {
-        private MainForm main;
-        public string Username { get; set; }
-        private string Password { get; set; }
+        private MainForm mainForm;
+        public IMain model { get; set; }
+        //public string Username { get; set; }
+        //public string Password { get; set; }
 
-        public LoginForm(MainForm m)
+        public LoginForm(MainForm m, IMain iMain)
         {
             InitializeComponent();
-            main = m;
-            main.Enabled = false;
+
+            mainForm = m;
+            mainForm.Enabled = false;
+            model = iMain;
+
+            // check exist file settings
+            // if does, show saved login and password
+            // else add an example
         }
 
         private void loginBtn_Click(object sender, EventArgs e)
         {
-            Username = usernameEdt.Text;
-            Password = passwordEdt.Text;
+            model.UserLogin = usernameEdt.Text;
+            model.UserPassword = passwordEdt.Text;
 
-            if (check_user())
+            if (model.CloudLoginSuccess())
             {
-                main.Enabled = true;
+                mainForm.Enabled = true;
                 Close();
             }
             else
-            {
-                MessageBox.Show("Invalid username/password. Please try again!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                MessageBox.Show((new SignInFailedException()).Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
-        /// <summary>
-        /// check valid Username and Password
-        /// </summary>
-        /// <returns>
-        /// true if valid user and password
-        /// else return false
-        /// </returns>
-        private bool check_user()
-        {
-            // just a test
-            if (Username == "admin" && Password == "123")
-                return true;
-            return true;
-        }
-
+        
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://mega.nz");
