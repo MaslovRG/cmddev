@@ -54,6 +54,7 @@ namespace FileSyncSDK.Interfaces
         /// Путь к рабочей папке в облачном сервисе.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exceptions.InvalidServiceFolderPathException"></exception>
         string ServiceFolderPath { get; set; }
 
         /// <summary>

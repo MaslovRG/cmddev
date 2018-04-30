@@ -1,4 +1,5 @@
 ﻿using FileSyncSDK.Enums;
+using FileSyncSDK.Exceptions;
 using FileSyncSDK.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace FileSyncSDK.Implementations
                     throw new ArgumentNullException();
 
                 if (!IsFolderValueCorrect(value))
-                    throw new ArgumentException("Invalid path.");
+                    throw new InvalidServiceFolderPathException();
 
                 serviceFolderPath = value;
             }
