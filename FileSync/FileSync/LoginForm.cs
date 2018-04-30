@@ -39,7 +39,7 @@ namespace FileSync
                 Close();
             }
             else
-                MessageBox.Show((new SignInFailedException()).Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show((new ServiceSignInFailedException()).Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

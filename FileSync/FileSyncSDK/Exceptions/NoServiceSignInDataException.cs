@@ -9,9 +9,15 @@ namespace FileSyncSDK.Exceptions
     /// <summary>
     /// Исключение, выбрасываемое тогда, когда для выполнения операции необходимы данные для авторизации на облачном сервисе, но они не были получены.
     /// </summary>
-    public class NoCloudSignInDataException : ArgumentNullException
+    public class NoServiceSignInDataException : ArgumentNullException
     {
-        public NoCloudSignInDataException() : base()
+        private const string message = "Данные пользователя облачного сервиса не указаны";
+
+        public NoServiceSignInDataException() : base(message)
+        {
+        }
+
+        public NoServiceSignInDataException(Exception inner) : base(message, inner)
         {
         }
     }

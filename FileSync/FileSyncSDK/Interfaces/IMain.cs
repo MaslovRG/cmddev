@@ -13,22 +13,23 @@ namespace FileSyncSDK.Interfaces
         /// В случае, если какие-то параметры не были заданы или для них требуются уточнения - выбрасываются соответствующие исключения.
         /// </summary>
         /// <exception cref="Exceptions.NoLocalSettingsPathException">Не задан путь к локальному файлу настроек.</exception>
-        /// <exception cref="Exceptions.NoCloudSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
-        /// <exception cref="Exceptions.SignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
+        /// <exception cref="Exceptions.NoServiceSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
+        /// <exception cref="Exceptions.ServiceSignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
         void GetData();
 
         /// <summary>
         /// Синхронизация групп файлов, отмеченных для синхронизации. Обновление файлов настроек.
         /// </summary>
         /// <exception cref="Exceptions.NoLocalSettingsPathException">Не задан путь к локальному файлу настроек.</exception>
-        /// <exception cref="Exceptions.NoCloudSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
-        /// <exception cref="Exceptions.SignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
+        /// <exception cref="Exceptions.NoServiceSignInDataException">Нет данных для авторизации на облачном сервисе.</exception>
+        /// <exception cref="Exceptions.ServiceSignInFailedException">Авторизация на облачном сервисе не удалась.</exception>
         void Syncronize();
 
         /// <summary>
         /// Путь к локальному файлу настроек.
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="Exceptions.SettingsDataCorruptedException">Данные в файле настроек повреждены.</exception>
         string LocalSettingsPath { get; set; }
 
         /// <summary>
@@ -63,12 +64,12 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Список групп файлов из глобального файла настроек.
         /// </summary>
-        IReadOnlyList<IGroup> GlobalGroups { get; }
+        IReadOnlyList<IGroupData> GlobalGroups { get; }
         
         /// <summary>
         /// Список групп файлов из локального файла настроек.
         /// </summary>
-        IReadOnlyList<IGroup> LocalGroups { get; }
+        IReadOnlyList<IGroupData> LocalGroups { get; }
 
         /// <summary>
         /// Создание новой группы.

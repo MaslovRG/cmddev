@@ -1,10 +1,4 @@
-﻿using FileSyncSDK.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml.Linq;
 
 namespace FileSyncSDK.Interfaces
 {
@@ -16,13 +10,10 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Заполнение данных из узла XML
         /// </summary>
-        /// <param name="node">
-        /// Исходный узел XML
+        /// <param name="element">
+        /// Исходный элемент XML
         /// </param>
-        /// <param name="settingsType">
-        /// Тип файла настроек, которому принадлежит узел <paramref name="node"/>
-        /// </param>
-        void ImportFromXml(XmlNode node, SettingsFileType settingsType);
+        void ImportFromXml(XElement element);
 
         /// <summary>
         /// Возвращает данные в виде XML узла
@@ -31,6 +22,6 @@ namespace FileSyncSDK.Interfaces
         /// Тип файла настроек, для которого предназначается возвращаемый узел
         /// </param>
         /// <returns>XML узел соответствующего типа</returns>
-        XmlNode ExportToXml(SettingsFileType settingsType);
+        XElement ExportToXml();
     }
 }

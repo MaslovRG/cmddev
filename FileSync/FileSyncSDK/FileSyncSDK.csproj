@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="docfx.console" Version="2.33.2" />
     <PackageReference Include="MegaApiClient" Version="1.6.3" />
   </ItemGroup>
 

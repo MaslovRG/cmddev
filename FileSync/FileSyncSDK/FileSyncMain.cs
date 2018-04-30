@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using FileSyncSDK.Interfaces;
 using FileSyncSDK.Implementations;
 using FileSyncSDK.Enums;
+using FileSyncSDK.Exceptions;
+using System.IO;
+using System.Linq;
 
 namespace FileSyncSDK
 {
@@ -14,6 +17,7 @@ namespace FileSyncSDK
         /// <param name="localSettingsPath">Значение параметра LocalSettingsPath.</param>
         /// <param name="progressView">Значение параметра ProgessView, может быть null.</param>
         /// <exception cref="ArgumentNullException">localSettingsPath null.</exception>
+        /// <exception cref="SettingsDataCorruptedException">Данные в локальном файле настроек не соответствуют ожидаемому формату.</exception>
         public FileSyncMain(string localSettingsPath, IProgress<IProgressData> progressView)
         {
             LocalSettingsPath = localSettingsPath;
@@ -30,9 +34,11 @@ namespace FileSyncSDK
             set
             {
                 if (localSettings == null)
-                    localSettings = new Settings(SettingsFileType.Local, value);
+                    localSettings = new Settings(value, SettingsFileType.Local);
                 else
                     localSettings.FilePath = value;
+
+                cloudService = localSettings.CloudService;
             }
         }
 
@@ -40,15 +46,12 @@ namespace FileSyncSDK
         {
             get
             {
-                return login;
+                return cloudService.UserLogin;
             }
 
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException();
-
-                login = value;
+                cloudService.UserLogin = value;
             }
         }
 
@@ -56,67 +59,136 @@ namespace FileSyncSDK
         {
             get
             {
-                return password;
+                return cloudService.UserPassword;
             }
 
             set
             {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentNullException();
+                cloudService.UserPassword = value;
+            }
 
-                password = value;
+        }
+
+        public string ServiceName
+        {
+            get
+            {
+                return cloudService.ServiceName;
+            }
+
+            set
+            {
+                cloudService.ServiceName = value;
             }
         }
 
-        public string ServiceName { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ServiceFolderPath { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ServiceFolderPath
+        {
+            get
+            {
+                return cloudService.ServiceFolderPath;
+            }
 
-        public IReadOnlyList<IGroup> GlobalGroups { get; }//=> throw new NotImplementedException();
+            set
+            {
+                cloudService.ServiceFolderPath = value;
+            }
+        }
 
-        public IReadOnlyList<IGroup> LocalGroups { get; }//=> throw new NotImplementedException();
+        public IReadOnlyList<IGroupData> GlobalGroups
+        {
+            get
+            {
+                return globalSettings?.Groups.ToList();
+            }
+        }
 
-        public IProgress<IProgressData> ProgressView { get; set; }//{ get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IReadOnlyList<IGroupData> LocalGroups
+        {
+            get
+            {
+                return localSettings?.Groups.ToList();
+            }
+        }
+
+        public IProgress<IProgressData> ProgressView
+        {
+            get
+            {
+                return progress;
+            }
+
+            set
+            {
+                progress = value;
+            }
+        }
 
         private ISettings localSettings = null;
         private ISettings globalSettings = null;
-        private string login = null;
-        private string password = null;
-        private string serviceFolder = null;
-        private string serviceName = null;
+        private ICloudService cloudService = null;
+        private IProgress<IProgressData> progress = null;
 
         public void DeleteGroup(string name, bool local, bool global)
         {
-            throw new NotImplementedException();
+            if (local)
+            {
+                IGroup group = localSettings.Groups.SingleOrDefault(g => g.Name == name);
+                if (group != null)
+                    localSettings.Groups.Remove(group);
+            }
+
+            if (global)
+            {
+                using (ISession session = cloudService.OpenSession(progress))
+                {
+                    globalSettings = session.GlobalSettings;
+                    IGroup group = globalSettings.Groups.SingleOrDefault(g => g.Name == name);
+                    if (group != null)
+                        session.DeleteGroup(group);
+                }
+            }
         }
 
         public void NewGroup(string name, string[] files, string[] folders)
         {
-            throw new NotImplementedException();
+            IGroup group = new Group(name, files, folders);
+            if (localSettings.Groups.Contains(group) || globalSettings.Groups.Contains(group))
+                throw new ArgumentException("Group with that name already exists.");
+
+            localSettings.Groups.Add(group);
         }
 
         public void GetData()
         {
-            using (ISyncronizer syncronizer = new Syncronizer(serviceName, login, password, serviceFolder))
+            using (ISession session = cloudService.OpenSession(progress))
             {
-                // TODO
+                globalSettings = session.GlobalSettings;
             }
+            localSettings.Save();
         }
 
         public void Syncronize()
         {
-            throw new NotImplementedException();
+            using (ISession session = cloudService.OpenSession(progress))
+            {
+                session.SyncronizeGroups(session.GlobalSettings.Groups);
+                globalSettings = session.GlobalSettings;
+            }
+            localSettings.Save();
         }
 
         public bool CloudLoginSuccess()
         {
             try
             {
-                using (ISyncronizer test = new Syncronizer(serviceName, login, password, serviceFolder))
+                using (ISession session = cloudService.OpenSession())
                 {
+                    localSettings.Save();
                     return true;
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
