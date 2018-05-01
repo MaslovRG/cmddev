@@ -219,5 +219,14 @@ namespace FileSync
                 }
             }
         }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO
+            // write User's Guide about how to use program
+            MessageBox.Show("DevSync version 1.0\n" +
+                "Author: cmddev-2018-IU7-81\n" +
+                "Source: https://github.com/MaslovRG/cmddev/", "Help");
+        }
     }
 }
