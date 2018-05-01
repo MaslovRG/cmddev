@@ -38,7 +38,7 @@ namespace FileSync
         {
             model.UserLogin = usernameEdt.Text;
             model.UserPassword = passwordEdt.Text;
-            
+
             if (model.CloudLoginSuccess())
             {
                 try
