@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Windows.Forms;
 using FileSyncSDK.Exceptions;
 using FileSyncSDK.Interfaces;
-using FileSyncSDK.Enums;
 
 namespace FileSync
 {
@@ -12,8 +10,6 @@ namespace FileSync
     {
         private MainForm mainForm;
         public IMain model { get; set; }
-        //public string Username { get; set; }
-        //public string Password { get; set; }
 
         public LoginForm(MainForm m, IMain iMain)
         {
@@ -25,21 +21,47 @@ namespace FileSync
 
             // check exist file settings
             // if does, show saved login and password
-            // else add an example
+            // else show default
+            if (model.UserLogin != null)
+            {
+                usernameEdt.Text = model.UserLogin;
+                passwordEdt.Text = model.UserPassword;
+            }
+            else
+            {
+                usernameEdt.Text = "Username";
+                passwordEdt.Text = "password";
+            }
         }
 
         private void loginBtn_Click(object sender, EventArgs e)
         {
             model.UserLogin = usernameEdt.Text;
             model.UserPassword = passwordEdt.Text;
-
+            
             if (model.CloudLoginSuccess())
             {
+                try
+                {
+                    model.ServiceFolderPath = serverPathEdt.Text;
+                }
+                catch (InvalidServiceFolderPathException ex)
+                {
+                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 mainForm.Enabled = true;
                 Close();
             }
             else
+            {
                 MessageBox.Show((new ServiceSignInFailedException()).Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            //// just for test
+            //model.UserLogin = usernameEdt.Text;
+            //model.UserPassword = passwordEdt.Text;
+            //mainForm.Enabled = true;
+            //Close();
         }
         
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

@@ -38,15 +38,13 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.updateToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingSyncToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setPathToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openPath = new System.Windows.Forms.OpenFileDialog();
+            this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -139,45 +137,31 @@
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.updateToolStripMenuItem,
-            this.updateToolStripMenuItem1});
+            this.updateToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
-            this.settingsToolStripMenuItem.Text = "Sync";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(111, 20);
+            this.settingsToolStripMenuItem.Text = "Синхронировать";
             // 
             // updateToolStripMenuItem
             // 
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.updateToolStripMenuItem.Text = "Sync now";
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.updateToolStripMenuItem.Text = "Синхронируй сейчас";
             this.updateToolStripMenuItem.Click += new System.EventHandler(this.updateToolStripMenuItem_Click);
-            // 
-            // updateToolStripMenuItem1
-            // 
-            this.updateToolStripMenuItem1.Name = "updateToolStripMenuItem1";
-            this.updateToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.updateToolStripMenuItem1.Text = "Update";
             // 
             // settingsToolStripMenuItem1
             // 
             this.settingsToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.settingSyncToolStripMenuItem,
             this.setPathToolStripMenuItem});
             this.settingsToolStripMenuItem1.Name = "settingsToolStripMenuItem1";
-            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem1.Text = "Settings";
-            // 
-            // settingSyncToolStripMenuItem
-            // 
-            this.settingSyncToolStripMenuItem.Name = "settingSyncToolStripMenuItem";
-            this.settingSyncToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.settingSyncToolStripMenuItem.Text = "Display";
+            this.settingsToolStripMenuItem1.Size = new System.Drawing.Size(78, 20);
+            this.settingsToolStripMenuItem1.Text = "Настройка";
             // 
             // setPathToolStripMenuItem
             // 
             this.setPathToolStripMenuItem.Name = "setPathToolStripMenuItem";
-            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
-            this.setPathToolStripMenuItem.Text = "Set path...";
+            this.setPathToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.setPathToolStripMenuItem.Text = "Путь к локальному";
             this.setPathToolStripMenuItem.Click += new System.EventHandler(this.setPathToolStripMenuItem_Click);
             // 
             // accountToolStripMenuItem
@@ -186,8 +170,8 @@
             this.switchAccountToolStripMenuItem,
             this.signOutToolStripMenuItem});
             this.accountToolStripMenuItem.Name = "accountToolStripMenuItem";
-            this.accountToolStripMenuItem.Size = new System.Drawing.Size(64, 20);
-            this.accountToolStripMenuItem.Text = "Account";
+            this.accountToolStripMenuItem.Size = new System.Drawing.Size(96, 20);
+            this.accountToolStripMenuItem.Text = "Пользователь";
             // 
             // switchAccountToolStripMenuItem
             // 
@@ -200,17 +184,14 @@
             // 
             this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
             this.signOutToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.signOutToolStripMenuItem.Text = "Sign out";
+            this.signOutToolStripMenuItem.Text = "Выход";
+            this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.aboutToolStripMenuItem.Text = "About";
-            // 
-            // openPath
-            // 
-            this.openPath.InitialDirectory = "C:";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
+            this.aboutToolStripMenuItem.Text = "Помощь";
             // 
             // MainForm
             // 
@@ -247,17 +228,15 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem settingSyncToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem setPathToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem accountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem switchAccountToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem signOutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openPath;
         private System.Windows.Forms.TreeView localTree;
         private System.Windows.Forms.TreeView globalTree;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowser;
     }
 }
 

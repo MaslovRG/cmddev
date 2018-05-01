@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using FileSyncSDK;
@@ -24,29 +23,20 @@ namespace FileSync
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            try
-            {
-                loginForm.ShowDialog();
-                model = loginForm.model;
-
-                logStt.Text = "Welcome, " + model.UserLogin;
-
-                //LocalWorkingPath = model.LocalSettingsPath;
-                //GlobalWorkingPath = model.ServiceFolderPath;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            loginForm.ShowDialog();
+            model = loginForm.model;
+            TreePath.ShowDirectory(localTree, model.LocalSettingsPath);
+            TreePath.ShowDirectory(globalTree, model.ServiceFolderPath);
+            logStt.Text = "Welcome, " + model.UserLogin;
         }
 
         private void setPathToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var pathForm = new PathForm(this);
-            pathForm.ShowDialog();
-            //WorkingPath = pathForm.FolderPath;
-
-            TreePath.ShowDirectory(localTree, model.LocalSettingsPath);
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                model.LocalSettingsPath = folderBrowser.SelectedPath;
+                TreePath.ShowDirectory(localTree, model.LocalSettingsPath);
+            }
         }
 
         private void updateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -57,6 +47,12 @@ namespace FileSync
         private void switchAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MainForm_Load(sender, e);
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var log = new LogOutForm(this);
+            log.ShowDialog();
         }
     }
 }

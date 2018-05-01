@@ -38,6 +38,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.loginBtn = new Bunifu.Framework.UI.BunifuThinButton2();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.serverPathEdt = new Bunifu.Framework.UI.BunifuMaterialTextbox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,7 +66,7 @@
             this.passwordEdt.LineIdleColor = System.Drawing.Color.White;
             this.passwordEdt.LineMouseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.passwordEdt.LineThickness = 3;
-            this.passwordEdt.Location = new System.Drawing.Point(67, 198);
+            this.passwordEdt.Location = new System.Drawing.Point(67, 187);
             this.passwordEdt.Margin = new System.Windows.Forms.Padding(4);
             this.passwordEdt.Name = "passwordEdt";
             this.passwordEdt.Size = new System.Drawing.Size(249, 30);
@@ -127,7 +128,7 @@
             this.loginBtn.IdleFillColor = System.Drawing.Color.White;
             this.loginBtn.IdleForecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(240)))));
             this.loginBtn.IdleLineColor = System.Drawing.Color.White;
-            this.loginBtn.Location = new System.Drawing.Point(67, 263);
+            this.loginBtn.Location = new System.Drawing.Point(67, 282);
             this.loginBtn.Margin = new System.Windows.Forms.Padding(5);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(249, 41);
@@ -155,6 +156,26 @@
             this.linkLabel1.VisitedLinkColor = System.Drawing.Color.LimeGreen;
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // serverPathEdt
+            // 
+            this.serverPathEdt.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.serverPathEdt.Font = new System.Drawing.Font("Century Gothic", 9.75F);
+            this.serverPathEdt.ForeColor = System.Drawing.Color.White;
+            this.serverPathEdt.HintForeColor = System.Drawing.Color.Empty;
+            this.serverPathEdt.HintText = "";
+            this.serverPathEdt.isPassword = false;
+            this.serverPathEdt.LineFocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.serverPathEdt.LineIdleColor = System.Drawing.Color.White;
+            this.serverPathEdt.LineMouseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.serverPathEdt.LineThickness = 3;
+            this.serverPathEdt.Location = new System.Drawing.Point(67, 225);
+            this.serverPathEdt.Margin = new System.Windows.Forms.Padding(4);
+            this.serverPathEdt.Name = "serverPathEdt";
+            this.serverPathEdt.Size = new System.Drawing.Size(249, 30);
+            this.serverPathEdt.TabIndex = 5;
+            this.serverPathEdt.Text = "Server Path";
+            this.serverPathEdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,6 +187,7 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.serverPathEdt);
             this.Controls.Add(this.passwordEdt);
             this.Controls.Add(this.usernameEdt);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -189,5 +211,6 @@
         private Bunifu.Framework.UI.BunifuDragControl bunifuDragControl1;
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse2;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private Bunifu.Framework.UI.BunifuMaterialTextbox serverPathEdt;
     }
 }
