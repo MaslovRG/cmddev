@@ -11,9 +11,6 @@ namespace FileSync
         private LoginForm loginForm;
         private IMain model { get; set; }
 
-        private string LocalWorkingPath { get; set; }
-        private string GlobalWorkingPath { get; set; }
-
         public MainForm()
         {
             InitializeComponent();
@@ -27,7 +24,7 @@ namespace FileSync
             model = loginForm.model;
             TreePath.ShowDirectory(localTree, model.LocalSettingsPath);
             TreePath.ShowDirectory(globalTree, model.ServiceFolderPath);
-            logStt.Text = "Welcome, " + model.UserLogin;
+            logStt.Text = "Добрый день, " + model.UserLogin;
         }
 
         private void setPathToolStripMenuItem_Click(object sender, EventArgs e)
