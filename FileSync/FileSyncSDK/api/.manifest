@@ -1,8 +1,5 @@
 {
   "FileSync": "FileSync.yml",
-  "FileSync.ControlPanel": "FileSync.ControlPanel.yml",
-  "FileSync.ControlPanel.#ctor": "FileSync.ControlPanel.yml",
-  "FileSync.ControlPanel.Dispose(System.Boolean)": "FileSync.ControlPanel.yml",
   "FileSync.LoginForm": "FileSync.LoginForm.yml",
   "FileSync.LoginForm.#ctor(FileSync.MainForm,FileSyncSDK.Interfaces.IMain)": "FileSync.LoginForm.yml",
   "FileSync.LoginForm.Dispose(System.Boolean)": "FileSync.LoginForm.yml",
@@ -13,7 +10,6 @@
   "FileSync.MainForm": "FileSync.MainForm.yml",
   "FileSync.MainForm.#ctor": "FileSync.MainForm.yml",
   "FileSync.MainForm.Dispose(System.Boolean)": "FileSync.MainForm.yml",
-  "FileSync.MainForm.treeView": "FileSync.MainForm.yml",
   "FileSyncSDK": "FileSyncSDK.yml",
   "FileSyncSDK.Enums": "FileSyncSDK.Enums.yml",
   "FileSyncSDK.Enums.SettingsFileType": "FileSyncSDK.Enums.SettingsFileType.yml",

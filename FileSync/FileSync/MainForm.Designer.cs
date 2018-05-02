@@ -38,6 +38,10 @@
             this.localTable = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.stripGroupAction = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.globalTable = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,7 +50,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.dataSyncEdt = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.nameGroupEdt = new System.Windows.Forms.TextBox();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -68,12 +74,6 @@
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
-            this.stripGroupAction = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.nameGroupEdt = new System.Windows.Forms.TextBox();
-            this.dataSyncEdt = new System.Windows.Forms.TextBox();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -85,6 +85,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.localTable)).BeginInit();
+            this.stripGroupAction.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.globalTable)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -106,7 +107,6 @@
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.propertyFolderTable)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.stripGroupAction.SuspendLayout();
             this.SuspendLayout();
             // 
             // bottomPanel
@@ -215,6 +215,38 @@
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Width = 200;
             // 
+            // stripGroupAction
+            // 
+            this.stripGroupAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.stripGroupAction.Name = "stripGroupAction";
+            this.stripGroupAction.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.stripGroupAction.ShowImageMargin = false;
+            this.stripGroupAction.Size = new System.Drawing.Size(143, 70);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
+            this.toolStripMenuItem1.Text = "Добавить группу";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(142, 22);
+            this.toolStripMenuItem2.Text = "Удалить группу";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(142, 22);
+            this.toolStripMenuItem3.Text = "Синхронировать";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
             // globalTable
             // 
             this.globalTable.AllowUserToAddRows = false;
@@ -322,6 +354,16 @@
             this.label4.TabIndex = 1;
             this.label4.Text = "Имя группы";
             // 
+            // dataSyncEdt
+            // 
+            this.dataSyncEdt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataSyncEdt.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataSyncEdt.Location = new System.Drawing.Point(0, 28);
+            this.dataSyncEdt.Name = "dataSyncEdt";
+            this.dataSyncEdt.Size = new System.Drawing.Size(201, 26);
+            this.dataSyncEdt.TabIndex = 7;
+            this.dataSyncEdt.Text = "00.00.0000 00:00";
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.nameGroupEdt);
@@ -330,6 +372,16 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(201, 28);
             this.panel6.TabIndex = 5;
+            // 
+            // nameGroupEdt
+            // 
+            this.nameGroupEdt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nameGroupEdt.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameGroupEdt.Location = new System.Drawing.Point(0, 0);
+            this.nameGroupEdt.Name = "nameGroupEdt";
+            this.nameGroupEdt.Size = new System.Drawing.Size(201, 26);
+            this.nameGroupEdt.TabIndex = 2;
+            this.nameGroupEdt.Text = "GroupName";
             // 
             // splitContainer4
             // 
@@ -525,58 +577,6 @@
             this.aboutToolStripMenuItem.Text = "Помощь";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // stripGroupAction
-            // 
-            this.stripGroupAction.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3});
-            this.stripGroupAction.Name = "stripGroupAction";
-            this.stripGroupAction.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.stripGroupAction.ShowImageMargin = false;
-            this.stripGroupAction.Size = new System.Drawing.Size(143, 70);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 22);
-            this.toolStripMenuItem1.Text = "Добавить группу";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
-            // 
-            // toolStripMenuItem2
-            // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(142, 22);
-            this.toolStripMenuItem2.Text = "Удалить группу";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // toolStripMenuItem3
-            // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(142, 22);
-            this.toolStripMenuItem3.Text = "Синхронировать";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
-            // 
-            // nameGroupEdt
-            // 
-            this.nameGroupEdt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nameGroupEdt.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameGroupEdt.Location = new System.Drawing.Point(0, 0);
-            this.nameGroupEdt.Name = "nameGroupEdt";
-            this.nameGroupEdt.Size = new System.Drawing.Size(201, 26);
-            this.nameGroupEdt.TabIndex = 2;
-            this.nameGroupEdt.Text = "GroupName";
-            // 
-            // dataSyncEdt
-            // 
-            this.dataSyncEdt.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataSyncEdt.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataSyncEdt.Location = new System.Drawing.Point(0, 28);
-            this.dataSyncEdt.Name = "dataSyncEdt";
-            this.dataSyncEdt.Size = new System.Drawing.Size(201, 26);
-            this.dataSyncEdt.TabIndex = 7;
-            this.dataSyncEdt.Text = "00.00.0000 00:00";
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -604,6 +604,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.localTable)).EndInit();
+            this.stripGroupAction.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.globalTable)).EndInit();
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -633,7 +634,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.propertyFolderTable)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.stripGroupAction.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -30,32 +30,29 @@ namespace FileSync
             else
             {
                 usernameEdt.Text = "Username";
-                passwordEdt.Text = "password";
+                passwordEdt.Text = "Password";
             }
+            serverPathEdt.Text = model.ServiceFolderPath;
         }
 
         private void loginBtn_Click(object sender, EventArgs e)
         {
-            model.UserLogin = usernameEdt.Text;
-            model.UserPassword = passwordEdt.Text;
-
-            if (model.CloudLoginSuccess())
+            try
             {
-                try
-                {
-                    model.ServiceFolderPath = serverPathEdt.Text;
-                }
-                catch (InvalidServiceFolderPathException ex)
-                {
-                    MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
+                model.ServiceFolderPath = serverPathEdt.Text;
+                model.UserLogin = usernameEdt.Text;
+                model.UserPassword = passwordEdt.Text;
+                model.GetData();
                 mainForm.Enabled = true;
                 Close();
             }
-            else
+            catch (ArgumentNullException)
             {
-                MessageBox.Show((new ServiceSignInFailedException()).Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ErrorMsg("Поля ввода не могут быть пустыми");
+            }
+            catch (Exception excp)
+            {
+                ErrorMsg(excp.Message);
             }
             //// just for test
             //model.UserLogin = usernameEdt.Text;
@@ -67,6 +64,11 @@ namespace FileSync
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://mega.nz");
+        }
+
+        private void ErrorMsg(string message)
+        {
+            MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
