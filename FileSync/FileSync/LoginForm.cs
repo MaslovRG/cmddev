@@ -66,5 +66,22 @@ namespace FileSync
         {
             MessageBox.Show(message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        private void usernameEdt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                passwordEdt.Text = "";
+                passwordEdt.Focus();
+            }
+        }
+
+        private void passwordEdt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                loginBtn_Click(sender, e);
+            }
+        }
     }
 }

@@ -77,6 +77,7 @@
             this.passwordEdt.TabIndex = 5;
             this.passwordEdt.Text = "Password";
             this.passwordEdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.passwordEdt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.passwordEdt_KeyDown);
             // 
             // usernameEdt
             // 
@@ -97,6 +98,7 @@
             this.usernameEdt.TabIndex = 6;
             this.usernameEdt.Text = "User Name";
             this.usernameEdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.usernameEdt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.usernameEdt_KeyDown);
             // 
             // bunifuElipse2
             // 

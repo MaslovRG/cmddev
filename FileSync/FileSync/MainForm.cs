@@ -41,7 +41,7 @@ namespace FileSync
             ShowGroup(localTable, model.LocalGroups);
 
             // Show global groups
-        //    ShowGroup(globalTable, model.GlobalGroups);
+            ShowGroup(globalTable, model.GlobalGroups);
         }
 
         /// <summary>
@@ -52,6 +52,7 @@ namespace FileSync
         private void ShowGroup(DataGridView view, IReadOnlyList<IGroupData> listGroup)
         {
             view.Rows.Clear();
+            view.RowCount = listGroup.Count;
             for (int i = 0; i < listGroup.Count; i++)
             {
                 view[0, i].Value = listGroup[i].Name;
@@ -67,10 +68,14 @@ namespace FileSync
         private void ShowNamePath(DataGridView view, IReadOnlyList<INamePath> list)
         {
             view.Rows.Clear();
-            for (int i = 0; i < list.Count; i++)
+            if (list.Count > 0)
             {
-                view[0, i].Value = list[i].Name;
-                view[1, i].Value = list[i].Path;
+                view.RowCount = list.Count;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    view[0, i].Value = list[i].Name;
+                    view[1, i].Value = list[i].Path;
+                }
             }
         }
 
@@ -190,6 +195,9 @@ namespace FileSync
         {
             if (e.RowIndex >= 0)
             {
+                if (propertyFileTable.RowCount == e.RowIndex + 1)
+                    propertyFileTable.RowCount++;
+
                 if (fileBrowser.ShowDialog() == DialogResult.OK)
                 {
                     propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
@@ -201,6 +209,9 @@ namespace FileSync
         {
             if (e.RowIndex >= 0)
             {
+                if (propertyFolderTable.RowCount == e.RowIndex + 1)
+                    propertyFolderTable.RowCount++;
+
                 if (folderBrowser.ShowDialog() == DialogResult.OK)
                 {
                     propertyFolderTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
