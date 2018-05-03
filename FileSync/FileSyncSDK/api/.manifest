@@ -93,6 +93,14 @@
   "FileSyncTests.Example1UnitTest.Example1OneIsOne": "FileSyncTests.Example1UnitTest.yml",
   "FileSyncTests.Example2UnitTest": "FileSyncTests.Example2UnitTest.yml",
   "FileSyncTests.Example2UnitTest.Example2OneIsOne": "FileSyncTests.Example2UnitTest.yml",
+  "FileSyncTests.GroupTest": "FileSyncTests.GroupTest.yml",
+  "FileSyncTests.GroupTest.GroupContruction1": "FileSyncTests.GroupTest.yml",
+  "FileSyncTests.GroupTest.GroupContruction2": "FileSyncTests.GroupTest.yml",
   "FileSyncTests.SettingsTest": "FileSyncTests.SettingsTest.yml",
-  "FileSyncTests.SettingsTest.TestLoad1": "FileSyncTests.SettingsTest.yml"
+  "FileSyncTests.SettingsTest.Initialize": "FileSyncTests.SettingsTest.yml",
+  "FileSyncTests.SettingsTest.SettingsContruction": "FileSyncTests.SettingsTest.yml",
+  "FileSyncTests.SettingsTest.SettingsLoad": "FileSyncTests.SettingsTest.yml",
+  "FileSyncTests.SettingsTest.SettingsLoadBadGlobalFile": "FileSyncTests.SettingsTest.yml",
+  "FileSyncTests.SettingsTest.SettingsLoadBadLocalFile": "FileSyncTests.SettingsTest.yml",
+  "FileSyncTests.SettingsTest.SettingsSave": "FileSyncTests.SettingsTest.yml"
 }
