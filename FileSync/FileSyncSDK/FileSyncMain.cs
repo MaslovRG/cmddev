@@ -182,7 +182,7 @@ namespace FileSyncSDK
         {
             using (ISession session = cloudService.OpenSession(progress))
             {
-                session.SyncronizeGroups(session.GlobalSettings.Groups);
+                session.SyncronizeGroups(localSettings.Groups);
                 globalSettings = session.GlobalSettings;
             }
             localSettings.Save();
