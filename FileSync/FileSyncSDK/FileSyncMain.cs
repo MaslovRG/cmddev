@@ -165,7 +165,7 @@ namespace FileSyncSDK
             if (localSettings.Groups.Any(g => g.Name == globalGroupName))
                 throw new ArgumentException("Group with that name already exists in local groups list.");
 
-            IGroup group = new Group(globalSettings.Groups.SingleOrDefault(g => g.Name == globalGroupName));
+            IGroup group = new Group(globalSettings.Groups.SingleOrDefault(g => g.Name == globalGroupName), false);
             localSettings.Groups.Add(group);
         }
 
