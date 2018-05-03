@@ -19,6 +19,6 @@ namespace FileSyncSDK.Interfaces
         /// <summary>
         /// Путь (полное имя) к объекту в локальной файловой системе
         /// </summary>
-        string Path { get; }
+        string Path { get; set; }
     }
 }

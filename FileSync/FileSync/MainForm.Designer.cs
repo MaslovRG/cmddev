@@ -70,6 +70,7 @@
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
+            this.fileBrowser = new System.Windows.Forms.OpenFileDialog();
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -542,9 +543,13 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
-            this.aboutToolStripMenuItem.Text = "Помощь";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(94, 20);
+            this.aboutToolStripMenuItem.Text = "О программе";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // fileBrowser
+            // 
+            this.fileBrowser.FileName = "openFileDialog1";
             // 
             // MainForm
             // 
@@ -650,6 +655,7 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.OpenFileDialog fileBrowser;
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
@@ -109,43 +110,50 @@ namespace FileSync
         }
 
         /// <summary>
+        /// Get data from table
+        /// </summary>
+        /// <param name="view"></param>
+        /// <returns></returns>
+        private string[] getDataTable(DataGridView view)
+        {
+            var data = view.Rows
+                .Cast<DataGridViewRow>()
+                .Where(row => !string.IsNullOrWhiteSpace(row.Cells[1]?.Value as string))
+                .Select(row => row.Cells[1].Value as string)
+                .Distinct()
+                .ToArray();
+
+            if (data.Any())
+                return data;
+            else
+                return null;
+        }
+
+        /// <summary>
         /// Add group by type
         /// </summary>
         /// <param name="type"></param>
         private void AddGroup(SettingsFileType type)
         {
-            // group name
-            string name = nameGroupEdt.Text;
-
-            // files in group
-            string[] files = null;
-            if (propertyFileTable.RowCount > 0)
+            if (nameGroupEdt.Text != null)
             {
-                files = new string[propertyFileTable.RowCount];
-                for (int i = 0; i < propertyFileTable.RowCount; i++)
-                {
-                    files[i] = propertyFileTable[0, i].Value.ToString();
-                }
+                // group name
+                string name = nameGroupEdt.Text;
+
+                // files in group
+                string[] files = getDataTable(propertyFileTable);
+
+                // folders in groups
+                string[] folders = getDataTable(propertyFolderTable);
+
+                model.NewGroup(name, files, folders);
+
+                // update view
+                if (type == SettingsFileType.Local)
+                    ShowGroup(localTable, model.LocalGroups);
+                else
+                    ShowGroup(globalTable, model.GlobalGroups);
             }
-
-            // folders in groups
-            string[] folders = null;
-            if (propertyFolderTable.RowCount > 0)
-            {
-                files = new string[propertyFolderTable.RowCount];
-                for (int i = 0; i < propertyFolderTable.RowCount; i++)
-                {
-                    files[i] = propertyFolderTable[0, i].Value.ToString();
-                }
-            }
-
-            model.NewGroup(name, files, folders);
-
-            // update view
-            if (type == SettingsFileType.Local)
-                ShowGroup(localTable, model.LocalGroups);
-            else
-                ShowGroup(globalTable, model.GlobalGroups);
         }
 
         /// <summary>
@@ -166,39 +174,7 @@ namespace FileSync
                 ShowGroup(globalTable, model.GlobalGroups);
             }
         }
-
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            ContextMenuStrip menu = sender as ContextMenuStrip;
-            string controlName = menu.SourceControl.Name;
-
-            var type = (controlName == "localTable") ? SettingsFileType.Local : SettingsFileType.Global;
-            AddGroup(type);
-        }
-
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            ContextMenuStrip menu = sender as ContextMenuStrip;
-            string controlName = menu.SourceControl.Name;
-
-            var type = (controlName == "localTable") ? SettingsFileType.Local : SettingsFileType.Global;
-            DeleteGroup(type);
-        }
-
-        private void toolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            model.Syncronize();
-        }
-
-        private void setPathToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (folderBrowser.ShowDialog() == DialogResult.OK)
-            {
-                model.LocalSettingsPath = folderBrowser.SelectedPath;
-                ShowGroup(localTable, model.LocalGroups);
-            }
-        }
-
+        
         private void switchAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MainForm_Load(sender, e);
@@ -214,9 +190,9 @@ namespace FileSync
         {
             if (e.RowIndex >= 0)
             {
-                if (folderBrowser.ShowDialog() == DialogResult.OK)
+                if (fileBrowser.ShowDialog() == DialogResult.OK)
                 {
-                    propertyFileTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
+                    propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
                 }
             }
         }
