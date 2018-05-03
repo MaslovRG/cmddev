@@ -46,10 +46,10 @@ namespace FileSyncSDK.Implementations
             ImportFromXml(element);
         }
 
-        public Group(IGroupData group)
+        public Group(IGroupData group, bool copyLastSync = true)
         {
             Name = group.Name;
-            LastSync = group.LastSync;
+            LastSync = copyLastSync ? group.LastSync : null;
             Files = group.Files.ToList();
             Folders = group.Folders.ToList();
         }
