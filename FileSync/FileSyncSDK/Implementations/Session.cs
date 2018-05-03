@@ -167,7 +167,7 @@ namespace FileSyncSDK.Implementations
             foreach (IGroup localGroup in localGroups)
             {
                 IGroup globalGroup = GlobalSettings.Groups.SingleOrDefault(g => g.Name == localGroup.Name);
-                if (globalGroup == null || (localGroup.LastSync != null && localGroup.LastSync > globalGroup.LastSync))
+                if (globalGroup == null || (localGroup.LastSync != null && localGroup.LastSync >= globalGroup.LastSync))
                     UploadGroup(localGroup, globalGroup);
                 else
                     DownloadGroup(localGroup, globalGroup);
