@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.logStt = new System.Windows.Forms.Label();
@@ -71,6 +72,7 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.fileBrowser = new System.Windows.Forms.OpenFileDialog();
+            this.dataSync = new System.Windows.Forms.Timer(this.components);
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -324,7 +326,7 @@
             this.dataSyncEdt.Name = "dataSyncEdt";
             this.dataSyncEdt.Size = new System.Drawing.Size(201, 26);
             this.dataSyncEdt.TabIndex = 7;
-            this.dataSyncEdt.Text = "00.00.0000 00:00";
+            this.dataSyncEdt.Text = "00.00.0000 00:00:00";
             // 
             // panel6
             // 
@@ -656,6 +658,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog fileBrowser;
+        private System.Windows.Forms.Timer dataSync;
     }
 }
 

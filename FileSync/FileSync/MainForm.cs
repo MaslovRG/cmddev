@@ -68,6 +68,7 @@ namespace FileSync
         private void ShowNamePath(DataGridView view, IReadOnlyList<INamePath> list)
         {
             view.Rows.Clear();
+            view.RowCount = 1;
             if (list.Count > 0)
             {
                 view.RowCount = list.Count;
@@ -132,6 +133,16 @@ namespace FileSync
                 return data;
             else
                 return null;
+        }
+
+        /// <summary>
+        /// Clear table
+        /// </summary>
+        /// <param name="view"></param>
+        private void ClearAllAfterAddOrDelete(DataGridView view)
+        {
+            view.Rows.Clear();
+            view.RowCount = 1;
         }
 
         /// <summary>
@@ -230,18 +241,38 @@ namespace FileSync
 
         private void SyncToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            model.Syncronize();
+            try
+            {
+                model.Syncronize();
+                ShowGroup(localTable, model.LocalGroups);
+                ShowGroup(globalTable, model.GlobalGroups);
+            }
+            catch (ArgumentNullException ex)
+            {
+                MessageBox.Show(ex.ToString(), "Ошибка");
+            }
         }
 
         private void AddGroupToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            AddGroup(SettingsFileType.Local);
+            try
+            {
+                AddGroup(SettingsFileType.Local);
+                ClearAllAfterAddOrDelete(propertyFileTable);
+                ClearAllAfterAddOrDelete(propertyFolderTable);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.ToString(), "Ошибка");
+            }
         }
 
         private void DeleteGroupToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             // solved!
             DeleteGroup(selectedTableType);
+            ClearAllAfterAddOrDelete(propertyFileTable);
+            ClearAllAfterAddOrDelete(propertyFolderTable);
         }
     }
 }
