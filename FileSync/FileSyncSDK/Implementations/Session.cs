@@ -15,6 +15,7 @@ namespace FileSyncSDK.Implementations
     {
         private const string settingsFileName = "settings.xml";
         private const string archivesFolderName = "Archives";
+        private const string archiveFileNameSuffix = ".zip";
 
         public Session(string login, string password, string path, IProgress<IProgressData> progess = null)
         {
@@ -96,7 +97,6 @@ namespace FileSyncSDK.Implementations
             }
 
             workFolderNode = node;
-            nodes = nodes.Where(n => n.ParentId == workFolderNode.Id).ToList();
 
             archivesFolderNode = nodes.SingleOrDefault(
                 n => n.ParentId == workFolderNode.Id &&
@@ -104,6 +104,8 @@ namespace FileSyncSDK.Implementations
                 n.Type == NodeType.Directory);
             if (archivesFolderNode == null)
                 archivesFolderNode = client.CreateFolder(archivesFolderName, workFolderNode);
+
+            nodes = client.GetNodes();
         }
 
         public ISettings GlobalSettings { get; private set; }
@@ -126,7 +128,7 @@ namespace FileSyncSDK.Implementations
                 throw new ArgumentOutOfRangeException();
 
             GlobalSettings.Groups.Remove(group);            
-            DeleteCloudFile(group.Name, archivesFolderNode);
+            DeleteCloudFile(group.Name + archiveFileNameSuffix, archivesFolderNode);
             UpdateSettings();
         }
 
@@ -193,15 +195,15 @@ namespace FileSyncSDK.Implementations
         private void DeleteArchive(IGroup localGroup, string archive)
         {
             ReportProgress(SyncStage.CleaningUp, localGroup);
-            Directory.Delete(archive);
-            File.Delete(archive);
+            Directory.Delete(archive, true);
+            File.Delete(archive + archiveFileNameSuffix);
         }
 
         private void ExtractArchive(IGroup localGroup, string archive)
         {
             ReportProgress(SyncStage.CopyingFiles, localGroup);
             Directory.CreateDirectory(archive);
-            ZipFile.ExtractToDirectory(archive, archive);
+            ZipFile.ExtractToDirectory(archive + archiveFileNameSuffix, archive);
 
             foreach (INamePath file in localGroup.Files)
                 File.Copy(Path.Combine(archive, file.Name), file.Path, true);
@@ -218,9 +220,9 @@ namespace FileSyncSDK.Implementations
         {
             ReportProgress(SyncStage.DownloadingArchive, group);
             INode archiveNode = nodes
-                .SingleOrDefault(n => n.Name == group.Name && n.Type == NodeType.File && n.ParentId == archivesFolderNode.Id);
+                .SingleOrDefault(n => n.Name == group.Name + archiveFileNameSuffix && n.Type == NodeType.File && n.ParentId == archivesFolderNode.Id);
             string archive = Path.Combine(tempArchivesFolderPath, group.Name);
-            client.DownloadFile(archiveNode, archive);
+            client.DownloadFile(archiveNode, archive + archiveFileNameSuffix);
             return archive;
         }
 
@@ -246,7 +248,7 @@ namespace FileSyncSDK.Implementations
         private void UploadArchive(IGroup localGroup, string archive)
         {
             ReportProgress(SyncStage.UpdatingCloudData, localGroup);
-            UpdateCloudFile(archive, archivesFolderNode);
+            UpdateCloudFile(archive + archiveFileNameSuffix, archivesFolderNode);
         }
 
         private string CreateArchive(IGroup localGroup)
@@ -257,11 +259,11 @@ namespace FileSyncSDK.Implementations
             Directory.CreateDirectory(archive);
             foreach (INamePath file in localGroup.Files)
                 File.Copy(file.Path, Path.Combine(archive, file.Name), true);
-            foreach (INamePath folder in localGroup.Files)
+            foreach (INamePath folder in localGroup.Folders)
                 DirectoryCopy(folder.Path, Path.Combine(archive, folder.Name));
 
             ReportProgress(SyncStage.CreatingArchive, localGroup);
-            ZipFile.CreateFromDirectory(archive, archive);
+            ZipFile.CreateFromDirectory(archive, archive + archiveFileNameSuffix);
 
             return archive;
         }
