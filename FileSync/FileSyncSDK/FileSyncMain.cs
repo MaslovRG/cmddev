@@ -152,10 +152,20 @@ namespace FileSyncSDK
 
         public void NewGroup(string name, string[] files, string[] folders)
         {
-            IGroup group = new Group(name, files, folders);
-            if (localSettings.Groups.Contains(group) || globalSettings.Groups.Contains(group))
+            if (localSettings.Groups.Any(g => g.Name == name) || globalSettings.Groups.Any(g => g.Name == name))
                 throw new ArgumentException("Group with that name already exists.");
+            IGroup group = new Group(name, files, folders);
+            localSettings.Groups.Add(group);
+        }
 
+        public void NewGroup(string globalGroupName)
+        {
+            if (!globalSettings.Groups.Any(g => g.Name == globalGroupName))
+                throw new ArgumentException("Group with that name does not exists in global groups list.");
+            if (localSettings.Groups.Any(g => g.Name == globalGroupName))
+                throw new ArgumentException("Group with that name already exists in local groups list.");
+
+            IGroup group = new Group(globalSettings.Groups.SingleOrDefault(g => g.Name == globalGroupName));
             localSettings.Groups.Add(group);
         }
 

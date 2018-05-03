@@ -83,6 +83,14 @@ namespace FileSyncSDK.Interfaces
         void NewGroup(string name, string[] files, string[] folders);
 
         /// <summary>
+        /// Перенос группы из глобального списка в локальный
+        /// </summary>
+        /// <param name="globalGroupName">Имя группы из глобального списка.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        void NewGroup(string globalGroupName);
+
+        /// <summary>
         /// Удаление группы.
         /// </summary>
         /// <param name="name">Имя группы. Должно соответствовать имени существующей группы из любого из списков.</param>

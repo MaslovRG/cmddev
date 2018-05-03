@@ -15,6 +15,6 @@ namespace FileSyncSDK.Implementations
 
         public string Name { get; private set; }
 
-        public string Path { get; private set; }
+        public string Path { get; set; }
     }
 }
