@@ -212,6 +212,7 @@ namespace FileSync
                 if (fileBrowser.ShowDialog() == DialogResult.OK)
                 {
                     propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
+                    propertyFileTable[0, e.RowIndex].Value = Path.GetFileName(fileBrowser.FileName);
                 }
             }
         }
@@ -226,6 +227,7 @@ namespace FileSync
                 if (folderBrowser.ShowDialog() == DialogResult.OK)
                 {
                     propertyFolderTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
+                    propertyFolderTable[0, e.RowIndex].Value = Path.GetFileName(folderBrowser.SelectedPath);
                 }
             }
         }
@@ -244,6 +246,7 @@ namespace FileSync
             try
             {
                 model.Syncronize();
+                //MessageBox.Show(model.GlobalGroups.Count.ToString());
                 ShowGroup(localTable, model.LocalGroups);
                 ShowGroup(globalTable, model.GlobalGroups);
             }
