@@ -123,9 +123,16 @@ namespace FileSyncSDK.Implementations
 
         private void LoadGlobalSettings()
         {
-            XElement root = LoadXmlRoot("globalSettings");
-            LoadGroups(root);
-            LoadCloudService(root);
+            try
+            {
+                XElement root = LoadXmlRoot("globalSettings");
+                LoadGroups(root);
+                LoadCloudService(root);
+            }
+            catch (Exception e)
+            {
+                throw new SettingsDataCorruptedException(e);
+            }
         }
 
         private void InitData()

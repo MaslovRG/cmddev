@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="Example1UnitTest.cs" />
     <Compile Include="Example2UnitTest.cs" />
-    <Compile Include="GroupTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SettingsTest.cs" />
   </ItemGroup>
