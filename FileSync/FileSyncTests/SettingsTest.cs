@@ -50,7 +50,7 @@ namespace FileSyncTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(SettingsDataCorruptedException)]
+        [ExpectedException(typeof(SettingsDataCorruptedException))]
         public void SettingsLoadBadGlobalFile()
         {
             Settings settings = new Settings("THE_END", SettingsFileType.Global);
