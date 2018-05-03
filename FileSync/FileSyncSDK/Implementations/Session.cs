@@ -31,18 +31,21 @@ namespace FileSyncSDK.Implementations
             }
             catch (ArgumentNullException e)
             {
+                ErrorCleanUp();
                 throw new NoServiceSignInDataException(e);
             }
             catch (ApiException e)
             {
+                ErrorCleanUp();
                 throw new ServiceSignInFailedException(e);
             }
-            finally
-            {
-                if (client.IsLoggedIn)
-                    client.Logout();
-                ReportProgress(SyncStage.Null);
-            }
+        }
+
+        private void ErrorCleanUp()
+        {
+            if (client.IsLoggedIn)
+                client.Logout();
+            ReportProgress(SyncStage.Null);
         }
 
         private void SetupTempFolder()
@@ -78,13 +81,18 @@ namespace FileSyncSDK.Implementations
             var node = nodes.Single(n => n.Type == NodeType.Root);
             for (int i = 1; i < pathFolders.Length; ++i)
             {
-                node = nodes.SingleOrDefault(
+                INode nextNode = nodes.SingleOrDefault(
                     n => n.ParentId == node.Id &&
                     n.Name == pathFolders[i] &&
                     n.Type == NodeType.Directory);
-                if (node == null)
+
+                if (nextNode == null)
+                {
                     for (; i < pathFolders.Length; ++i)
                         node = client.CreateFolder(pathFolders[i], node);
+                }
+                else
+                    node = nextNode;
             }
 
             workFolderNode = node;

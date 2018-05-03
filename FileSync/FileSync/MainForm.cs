@@ -16,8 +16,17 @@ namespace FileSync
         public MainForm()
         {
             InitializeComponent();
-            model = new FileSyncMain(Directory.GetCurrentDirectory(), null);
+            model = new FileSyncMain(GetLocalSettingsPath(), null);
             loginForm = new LoginForm(this, model);
+        }
+
+        private string GetLocalSettingsPath()
+        {
+            string localSettingsFileName = "settings.xml";
+            string folderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "FileSync");
+            if (!Directory.Exists(folderPath))
+                Directory.CreateDirectory(folderPath);
+            return Path.Combine(folderPath, localSettingsFileName);
         }
 
         private void MainForm_Load(object sender, EventArgs e)

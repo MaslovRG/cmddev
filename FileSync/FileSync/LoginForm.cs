@@ -23,10 +23,7 @@ namespace FileSync
             // if does, show saved login and password
             // else show default
             if (model.UserLogin != null)
-            {
                 usernameEdt.Text = model.UserLogin;
-                passwordEdt.Text = model.UserPassword;
-            }
             else
             {
                 usernameEdt.Text = "Username";
