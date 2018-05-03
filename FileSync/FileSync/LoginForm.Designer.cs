@@ -39,6 +39,10 @@
             this.loginBtn = new Bunifu.Framework.UI.BunifuThinButton2();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.serverPathEdt = new Bunifu.Framework.UI.BunifuMaterialTextbox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,7 +70,7 @@
             this.passwordEdt.LineIdleColor = System.Drawing.Color.White;
             this.passwordEdt.LineMouseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.passwordEdt.LineThickness = 3;
-            this.passwordEdt.Location = new System.Drawing.Point(67, 187);
+            this.passwordEdt.Location = new System.Drawing.Point(76, 189);
             this.passwordEdt.Margin = new System.Windows.Forms.Padding(4);
             this.passwordEdt.Name = "passwordEdt";
             this.passwordEdt.Size = new System.Drawing.Size(249, 30);
@@ -86,7 +90,7 @@
             this.usernameEdt.LineIdleColor = System.Drawing.Color.White;
             this.usernameEdt.LineMouseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.usernameEdt.LineThickness = 3;
-            this.usernameEdt.Location = new System.Drawing.Point(67, 149);
+            this.usernameEdt.Location = new System.Drawing.Point(76, 140);
             this.usernameEdt.Margin = new System.Windows.Forms.Padding(4);
             this.usernameEdt.Name = "usernameEdt";
             this.usernameEdt.Size = new System.Drawing.Size(249, 30);
@@ -104,7 +108,7 @@
             this.pictureBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(118, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(127, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(141, 130);
             this.pictureBox1.TabIndex = 9;
@@ -128,7 +132,7 @@
             this.loginBtn.IdleFillColor = System.Drawing.Color.White;
             this.loginBtn.IdleForecolor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(175)))), ((int)(((byte)(240)))));
             this.loginBtn.IdleLineColor = System.Drawing.Color.White;
-            this.loginBtn.Location = new System.Drawing.Point(67, 282);
+            this.loginBtn.Location = new System.Drawing.Point(76, 282);
             this.loginBtn.Margin = new System.Windows.Forms.Padding(5);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(249, 41);
@@ -146,7 +150,7 @@
             this.linkLabel1.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.linkLabel1.LinkColor = System.Drawing.Color.Chartreuse;
             this.linkLabel1.LinkVisited = true;
-            this.linkLabel1.Location = new System.Drawing.Point(145, 338);
+            this.linkLabel1.Location = new System.Drawing.Point(149, 338);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(103, 23);
             this.linkLabel1.TabIndex = 12;
@@ -168,13 +172,55 @@
             this.serverPathEdt.LineIdleColor = System.Drawing.Color.White;
             this.serverPathEdt.LineMouseHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.serverPathEdt.LineThickness = 3;
-            this.serverPathEdt.Location = new System.Drawing.Point(67, 225);
+            this.serverPathEdt.Location = new System.Drawing.Point(76, 243);
             this.serverPathEdt.Margin = new System.Windows.Forms.Padding(4);
             this.serverPathEdt.Name = "serverPathEdt";
             this.serverPathEdt.Size = new System.Drawing.Size(249, 30);
             this.serverPathEdt.TabIndex = 5;
             this.serverPathEdt.Text = "Server Path";
             this.serverPathEdt.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "label1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label2.Location = new System.Drawing.Point(73, 125);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 13);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Пользователь";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label3.Location = new System.Drawing.Point(73, 175);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 15;
+            this.label3.Text = "Пароль";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.label4.Location = new System.Drawing.Point(75, 227);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(117, 13);
+            this.label4.TabIndex = 16;
+            this.label4.Text = "Путь к рабочей папке";
             // 
             // LoginForm
             // 
@@ -183,7 +229,11 @@
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(380, 380);
+            this.ClientSize = new System.Drawing.Size(397, 395);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.pictureBox1);
@@ -212,5 +262,9 @@
         private Bunifu.Framework.UI.BunifuElipse bunifuElipse2;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private Bunifu.Framework.UI.BunifuMaterialTextbox serverPathEdt;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
     }
 }

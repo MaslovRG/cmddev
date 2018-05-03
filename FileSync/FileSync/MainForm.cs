@@ -12,6 +12,7 @@ namespace FileSync
     {
         private LoginForm loginForm;
         private IMain model { get; set; }
+        private SettingsFileType selectedTableType { get; set; }
 
         public MainForm()
         {
@@ -97,11 +98,13 @@ namespace FileSync
 
         private void localTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            selectedTableType = SettingsFileType.Local;
             CellContentClick(sender, e, model.LocalGroups);
         }
 
         private void globalTable_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            selectedTableType = SettingsFileType.Global;
             CellContentClick(sender, e, model.GlobalGroups);
         }
 
@@ -236,6 +239,22 @@ namespace FileSync
             MessageBox.Show("DevSync version 1.0\n" +
                 "Author: cmddev-2018-IU7-81\n" +
                 "Source: https://github.com/MaslovRG/cmddev/", "Help");
+        }
+
+        private void SyncToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            model.Syncronize();
+        }
+
+        private void AddGroupToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AddGroup(SettingsFileType.Local);
+        }
+
+        private void DeleteGroupToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            // solved!
+            DeleteGroup(selectedTableType);
         }
     }
 }
