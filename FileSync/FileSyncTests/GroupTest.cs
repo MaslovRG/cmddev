@@ -53,6 +53,38 @@ namespace FileSyncTests
         {
             new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
         }
+
+        // тест HaveIntersection
+
+        public void HaveIntersection1()
+        {
+            Group group = new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
+            Assert.AreEqual(true, group.HaveIntersection(null, null));
+        }
+
+        public void HaveIntersection2()
+        {
+            Group group = new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
+            Assert.AreEqual(true, group.HaveIntersection(new List<string> { "aaa", "bbb" }, null));
+        }
+
+        public void HaveIntersection3()
+        {
+            Group group = new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
+            Assert.AreEqual(true, group.HaveIntersection(null, new List<string> { "aaa", "bbb" }));
+        }
+
+        public void HaveIntersection4()
+        {
+            Group group = new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
+            Assert.AreEqual(true, group.HaveIntersection(new List<string> { "aaa", "bbb" }, new List<string> { "aaa", "bbb" }));
+        }
+
+        public void HaveIntersection5()
+        {
+            Group group = new Group("name", new string[] { "aaa" }, new string[] { "bbb" });
+            Assert.AreEqual(false, group.HaveIntersection(new List<string> { "aaa", "bbb" }, new List<string> { "ccc" }));
+        }
     }
 }
 
