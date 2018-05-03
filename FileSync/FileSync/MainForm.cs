@@ -118,7 +118,7 @@ namespace FileSync
         {
             var data = view.Rows
                 .Cast<DataGridViewRow>()
-                .Where(row => string.IsNullOrWhiteSpace(row.Cells[1]?.Value as string))
+                .Where(row => !string.IsNullOrWhiteSpace(row.Cells[1]?.Value as string))
                 .Select(row => row.Cells[1].Value as string)
                 .Distinct()
                 .ToArray();
@@ -192,7 +192,7 @@ namespace FileSync
             {
                 if (fileBrowser.ShowDialog() == DialogResult.OK)
                 {
-                    propertyFileTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
+                    propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
                 }
             }
         }
