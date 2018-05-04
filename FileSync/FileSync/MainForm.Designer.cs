@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.bottomPanel = new System.Windows.Forms.Panel();
             this.logStt = new System.Windows.Forms.Label();
@@ -65,6 +64,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.синхронизироватьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.добавитьГруппуToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.обновитьГруппуToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.удалитьГруппуToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.accountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.switchAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,7 +72,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.folderBrowser = new System.Windows.Forms.FolderBrowserDialog();
             this.fileBrowser = new System.Windows.Forms.OpenFileDialog();
-            this.dataSync = new System.Windows.Forms.Timer(this.components);
             this.bottomPanel.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -110,6 +109,7 @@
             // bottomPanel
             // 
             this.bottomPanel.BackColor = System.Drawing.Color.Snow;
+            this.bottomPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("bottomPanel.BackgroundImage")));
             this.bottomPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.bottomPanel.Controls.Add(this.logStt);
             this.bottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -121,9 +121,10 @@
             // logStt
             // 
             this.logStt.AutoSize = true;
+            this.logStt.BackColor = System.Drawing.Color.Transparent;
             this.logStt.Dock = System.Windows.Forms.DockStyle.Right;
             this.logStt.Font = new System.Drawing.Font("Sitka Heading", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.logStt.ForeColor = System.Drawing.Color.Blue;
+            this.logStt.ForeColor = System.Drawing.Color.Maroon;
             this.logStt.Location = new System.Drawing.Point(752, 0);
             this.logStt.Name = "logStt";
             this.logStt.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -195,7 +196,9 @@
             this.localTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.localTable.Size = new System.Drawing.Size(373, 246);
             this.localTable.TabIndex = 2;
+            this.localTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.localTable_CellContentClick);
             this.localTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.localTable_CellContentClick);
+            this.localTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.localTable_CellContentClick);
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -229,7 +232,9 @@
             this.globalTable.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.globalTable.Size = new System.Drawing.Size(373, 222);
             this.globalTable.TabIndex = 1;
+            this.globalTable.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.globalTable_CellContentClick);
             this.globalTable.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.globalTable_CellContentClick);
+            this.globalTable.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.globalTable_CellContentClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -346,6 +351,7 @@
             this.nameGroupEdt.Size = new System.Drawing.Size(201, 26);
             this.nameGroupEdt.TabIndex = 2;
             this.nameGroupEdt.Text = "GroupName";
+            this.nameGroupEdt.TextChanged += new System.EventHandler(this.nameGroupEdt_TextChanged);
             // 
             // splitContainer4
             // 
@@ -486,9 +492,11 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.MediumSeaGreen;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.синхронизироватьToolStripMenuItem,
             this.добавитьГруппуToolStripMenuItem1,
+            this.обновитьГруппуToolStripMenuItem,
             this.удалитьГруппуToolStripMenuItem1,
             this.accountToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -511,6 +519,14 @@
             this.добавитьГруппуToolStripMenuItem1.Size = new System.Drawing.Size(112, 20);
             this.добавитьГруппуToolStripMenuItem1.Text = "Добавить группу";
             this.добавитьГруппуToolStripMenuItem1.Click += new System.EventHandler(this.AddGroupToolStripMenuItem1_Click);
+            // 
+            // обновитьГруппуToolStripMenuItem
+            // 
+            this.обновитьГруппуToolStripMenuItem.Name = "обновитьГруппуToolStripMenuItem";
+            this.обновитьГруппуToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
+            this.обновитьГруппуToolStripMenuItem.Text = "Обновить группу";
+            this.обновитьГруппуToolStripMenuItem.Visible = false;
+            this.обновитьГруппуToolStripMenuItem.Click += new System.EventHandler(this.UpdateGroupToolStripMenuItem_Click);
             // 
             // удалитьГруппуToolStripMenuItem1
             // 
@@ -557,6 +573,7 @@
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.LightYellow;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(754, 520);
@@ -658,7 +675,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.OpenFileDialog fileBrowser;
-        private System.Windows.Forms.Timer dataSync;
+        private System.Windows.Forms.ToolStripMenuItem обновитьГруппуToolStripMenuItem;
     }
 }
 

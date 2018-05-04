@@ -9,17 +9,19 @@ using FileSyncSDK.Interfaces;
 
 namespace FileSync
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IProgress<IProgressData>
     {
         private LoginForm loginForm;
         private IMain model { get; set; }
         private SettingsFileType selectedTableType { get; set; }
+        private Report report;
 
         public MainForm()
         {
             InitializeComponent();
             model = new FileSyncMain(GetLocalSettingsPath(), null);
             loginForm = new LoginForm(this, model);
+            report = new Report();
         }
 
         private string GetLocalSettingsPath()
@@ -43,6 +45,8 @@ namespace FileSync
             // Show global groups
             ShowGroup(globalTable, model.GlobalGroups);
         }
+
+        #region Display
 
         /// <summary>
         /// Show groups (applying for localTable and globalTable)
@@ -81,16 +85,18 @@ namespace FileSync
         }
 
         /// <summary>
-        /// Show group's properties
+        /// 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// <param name="group"></param>
         private void CellContentClick(object sender, DataGridViewCellEventArgs e, IReadOnlyList<IGroupData> group)
         {
-            if (e.RowIndex >= 0)
+            var view = sender as DataGridView;
+            if (view.RowCount > 0)
             {
-                int index = e.RowIndex;
+                int index = view.CurrentCell.RowIndex;
+
                 // main stuff: Group's detail
                 nameGroupEdt.Text = group[index].Name;
                 dataSyncEdt.Text = group[index].LastSync.ToString();
@@ -115,6 +121,60 @@ namespace FileSync
             CellContentClick(sender, e, model.GlobalGroups);
         }
 
+        private void propertyFileTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (propertyFileTable.RowCount == e.RowIndex + 1)
+                    propertyFileTable.RowCount++;
+
+                if (fileBrowser.ShowDialog() == DialogResult.OK)
+                {
+                    propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
+                    propertyFileTable[0, e.RowIndex].Value = Path.GetFileName(fileBrowser.FileName);
+                }
+            }
+        }
+
+        private void propertyFolderTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (propertyFolderTable.RowCount == e.RowIndex + 1)
+                    propertyFolderTable.RowCount++;
+
+                if (folderBrowser.ShowDialog() == DialogResult.OK)
+                {
+                    propertyFolderTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
+                    propertyFolderTable[0, e.RowIndex].Value = Path.GetFileName(folderBrowser.SelectedPath);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Clear
+        /// <summary>
+        /// Clear table
+        /// </summary>
+        /// <param name="view"></param>
+        private void ClearAllAfterAddOrDelete(DataGridView view)
+        {
+            view.Rows.Clear();
+            view.RowCount = 1;
+        }
+
+        private void ClearAllAfterAddOrDelete()
+        {
+            nameGroupEdt.Clear();
+            dataSyncEdt.Clear();
+            ClearAllAfterAddOrDelete(propertyFileTable);
+            ClearAllAfterAddOrDelete(propertyFolderTable);
+        }
+        #endregion
+
+        #region Main operations with group: ADD, UPDATE, DELETE and SYNC (Solved)
+
         /// <summary>
         /// Get data from table
         /// </summary>
@@ -136,16 +196,6 @@ namespace FileSync
         }
 
         /// <summary>
-        /// Clear table
-        /// </summary>
-        /// <param name="view"></param>
-        private void ClearAllAfterAddOrDelete(DataGridView view)
-        {
-            view.Rows.Clear();
-            view.RowCount = 1;
-        }
-
-        /// <summary>
         /// Add group by type
         /// </summary>
         /// <param name="type"></param>
@@ -162,7 +212,11 @@ namespace FileSync
                 // folders in groups
                 string[] folders = getDataTable(propertyFolderTable);
 
-                model.NewGroup(name, files, folders);
+                // CASE: add group from global to local (solved)
+                if (selectedTableType == SettingsFileType.Global)
+                    model.NewGroup(name);
+                else
+                    model.NewGroup(name, files, folders);
 
                 // update view
                 if (type == SettingsFileType.Local)
@@ -189,54 +243,24 @@ namespace FileSync
                 model.DeleteGroup(name, false, true);
                 ShowGroup(globalTable, model.GlobalGroups);
             }
-        }
-        
-        private void switchAccountToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            MainForm_Load(sender, e);
+            ClearAllAfterAddOrDelete();
         }
 
-        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Update group by type (apply for local only)
+        /// </summary>
+        private void UpdateGroup()
         {
-            var log = new LogOutForm(this);
-            log.ShowDialog();
-        }
+            // group name
+            string name = nameGroupEdt.Text;
 
-        private void propertyFileTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
+            if (model.LocalGroups.ToArray()
+                .Any(s => s.Name == name)
+                )
             {
-                if (propertyFileTable.RowCount == e.RowIndex + 1)
-                    propertyFileTable.RowCount++;
-
-                if (fileBrowser.ShowDialog() == DialogResult.OK)
-                {
-                    propertyFileTable[1, e.RowIndex].Value = fileBrowser.FileName;
-                }
+                model.DeleteGroup(name, true, false);
+                AddGroup(SettingsFileType.Local);
             }
-        }
-
-        private void propertyFolderTable_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-                if (propertyFolderTable.RowCount == e.RowIndex + 1)
-                    propertyFolderTable.RowCount++;
-
-                if (folderBrowser.ShowDialog() == DialogResult.OK)
-                {
-                    propertyFolderTable[1, e.RowIndex].Value = folderBrowser.SelectedPath;
-                }
-            }
-        }
-
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            // TODO
-            // write User's Guide about how to use program
-            MessageBox.Show("DevSync version 1.0\n" +
-                "Author: cmddev-2018-IU7-81\n" +
-                "Source: https://github.com/MaslovRG/cmddev/", "Help");
         }
 
         private void SyncToolStripMenuItem_Click(object sender, EventArgs e)
@@ -244,6 +268,8 @@ namespace FileSync
             try
             {
                 model.Syncronize();
+                //Report(model.ProgressView);
+                //MessageBox.Show(model.GlobalGroups.Count.ToString());
                 ShowGroup(localTable, model.LocalGroups);
                 ShowGroup(globalTable, model.GlobalGroups);
             }
@@ -258,8 +284,7 @@ namespace FileSync
             try
             {
                 AddGroup(SettingsFileType.Local);
-                ClearAllAfterAddOrDelete(propertyFileTable);
-                ClearAllAfterAddOrDelete(propertyFolderTable);
+                ClearAllAfterAddOrDelete();
             }
             catch (ArgumentException ex)
             {
@@ -271,8 +296,64 @@ namespace FileSync
         {
             // solved!
             DeleteGroup(selectedTableType);
+            ClearAllAfterAddOrDelete();
+        }
+
+        private void UpdateGroupToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                UpdateGroup();
+                ClearAllAfterAddOrDelete();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("Ничего не изменяется!", "Сообщение");
+            }
+        }
+
+        private void nameGroupEdt_TextChanged(object sender, EventArgs e)
+        {
+            dataSyncEdt.Clear();
             ClearAllAfterAddOrDelete(propertyFileTable);
             ClearAllAfterAddOrDelete(propertyFolderTable);
         }
+
+        #endregion
+
+        #region Other stuffs
+
+        private void switchAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MainForm_Load(sender, e);
+        }
+
+        private void signOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var log = new LogOutForm(this);
+            log.ShowDialog();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO
+            // write User's Guide about how to use program
+            MessageBox.Show("DevSync version 1.0\n" +
+                "Author: cmddev-2018-IU7-81\n" +
+                "Source: https://github.com/MaslovRG/cmddev/", "О программе");
+        }
+
+        #endregion
+
+        #region Progress
+        
+        public void Report(IProgressData value)
+        {
+            var status = string.Format("\nGroup Name: {0}\tLast Sync: {1}\tStage: {2}",
+                value.Group.Name, value.Group.LastSync.ToString(), value.Stage.ToString());
+            report.ShowStatus(status);
+        }
+
+        #endregion
     }
 }
