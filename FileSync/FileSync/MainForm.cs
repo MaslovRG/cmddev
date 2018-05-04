@@ -240,7 +240,6 @@ namespace FileSync
             }
             else
             {
-                model.DeleteGroup(name, true, false);
                 model.DeleteGroup(name, false, true);
                 ShowGroup(globalTable, model.GlobalGroups);
             }
