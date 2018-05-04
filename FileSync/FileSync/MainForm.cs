@@ -9,17 +9,19 @@ using FileSyncSDK.Interfaces;
 
 namespace FileSync
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IProgress<IProgressData>
     {
         private LoginForm loginForm;
         private IMain model { get; set; }
         private SettingsFileType selectedTableType { get; set; }
+        private Report report;
 
         public MainForm()
         {
             InitializeComponent();
             model = new FileSyncMain(GetLocalSettingsPath(), null);
             loginForm = new LoginForm(this, model);
+            report = new Report();
         }
 
         private string GetLocalSettingsPath()
@@ -171,7 +173,7 @@ namespace FileSync
         }
         #endregion
 
-        #region Main operations with group: ADD, UPDATE, DELETE
+        #region Main operations with group: ADD, UPDATE, DELETE and SYNC (Solved)
 
         /// <summary>
         /// Get data from table
@@ -211,12 +213,10 @@ namespace FileSync
                 string[] folders = getDataTable(propertyFolderTable);
 
                 // CASE: add group from global to local (solved)
-                //if (selectedTableType == SettingsFileType.Global)
-                //    model.NewGroup(name);
-                //else
-                //    model.NewGroup(name, files, folders);
-
-                model.NewGroup(name, files, folders);
+                if (selectedTableType == SettingsFileType.Global)
+                    model.NewGroup(name);
+                else
+                    model.NewGroup(name, files, folders);
 
                 // update view
                 if (type == SettingsFileType.Local)
@@ -269,6 +269,7 @@ namespace FileSync
             try
             {
                 model.Syncronize();
+                //Report(model.ProgressView);
                 //MessageBox.Show(model.GlobalGroups.Count.ToString());
                 ShowGroup(localTable, model.LocalGroups);
                 ShowGroup(globalTable, model.GlobalGroups);
@@ -340,7 +341,18 @@ namespace FileSync
             // write User's Guide about how to use program
             MessageBox.Show("DevSync version 1.0\n" +
                 "Author: cmddev-2018-IU7-81\n" +
-                "Source: https://github.com/MaslovRG/cmddev/", "Help");
+                "Source: https://github.com/MaslovRG/cmddev/", "О программе");
+        }
+
+        #endregion
+
+        #region Progress
+        
+        public void Report(IProgressData value)
+        {
+            var status = string.Format("\nGroup Name: {0}\tLast Sync: {1}\tStage: {2}",
+                value.Group.Name, value.Group.LastSync.ToString(), value.Stage.ToString());
+            report.ShowStatus(status);
         }
 
         #endregion
