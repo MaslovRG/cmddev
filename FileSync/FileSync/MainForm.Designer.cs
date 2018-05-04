@@ -525,6 +525,7 @@
             this.обновитьГруппуToolStripMenuItem.Name = "обновитьГруппуToolStripMenuItem";
             this.обновитьГруппуToolStripMenuItem.Size = new System.Drawing.Size(114, 20);
             this.обновитьГруппуToolStripMenuItem.Text = "Обновить группу";
+            this.обновитьГруппуToolStripMenuItem.Visible = false;
             this.обновитьГруппуToolStripMenuItem.Click += new System.EventHandler(this.UpdateGroupToolStripMenuItem_Click);
             // 
             // удалитьГруппуToolStripMenuItem1
